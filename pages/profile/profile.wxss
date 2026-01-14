@@ -1,60 +1,97 @@
-/* pages/profile/profile.wxss */
+/* pages/profile/profile.wxss - UI/UX Pro Max */
 .container {
-  padding: 20rpx;
-  padding-bottom: 120rpx;
+  padding: 24rpx;
+  padding-bottom: 140rpx;
+  background: linear-gradient(180deg, #F8FAFC 0%, #EEF2FF 100%);
+  min-height: 100vh;
 }
 
 .user-card {
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #409EFF 0%, #337ecc 100%);
-  border-radius: 20rpx;
-  padding: 40rpx;
-  margin-bottom: 20rpx;
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #A855F7 100%);
+  border-radius: 32rpx;
+  padding: 48rpx 36rpx;
+  margin-bottom: 24rpx;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16rpx 48rpx rgba(99, 102, 241, 0.35);
+}
+
+.user-card::before {
+  content: '';
+  position: absolute;
+  top: -80rpx;
+  right: -80rpx;
+  width: 240rpx;
+  height: 240rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.user-card::after {
+  content: '';
+  position: absolute;
+  bottom: -60rpx;
+  left: 20%;
+  width: 160rpx;
+  height: 160rpx;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
 }
 
 .avatar {
-  width: 120rpx;
-  height: 120rpx;
-  background: rgba(255, 255, 255, 0.3);
+  width: 140rpx;
+  height: 140rpx;
+  background: rgba(255, 255, 255, 0.25);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 30rpx;
+  margin-right: 32rpx;
+  position: relative;
+  z-index: 1;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
 }
 
 .avatar-text {
-  font-size: 48rpx;
+  font-size: 56rpx;
   color: #fff;
-  font-weight: bold;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
 .user-info {
   flex: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .username {
-  font-size: 36rpx;
-  font-weight: bold;
+  font-size: 40rpx;
+  font-weight: 700;
   color: #fff;
   display: block;
+  letter-spacing: 1rpx;
 }
 
 .role {
   font-size: 26rpx;
-  color: rgba(255, 255, 255, 0.8);
-  margin-top: 10rpx;
-  display: block;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 12rpx;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
 }
 
 .stats-card {
   display: flex;
   background: #fff;
-  border-radius: 16rpx;
-  padding: 30rpx;
-  margin-bottom: 20rpx;
+  border-radius: 24rpx;
+  padding: 36rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.06);
 }
 
 .stat-item {
@@ -63,75 +100,96 @@
 }
 
 .stat-value {
-  font-size: 40rpx;
-  font-weight: bold;
-  color: #409EFF;
+  font-size: 44rpx;
+  font-weight: 800;
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   display: block;
 }
 
 .stat-label {
   font-size: 26rpx;
-  color: #909399;
-  margin-top: 10rpx;
+  color: #6B7280;
+  margin-top: 12rpx;
   display: block;
+  font-weight: 500;
 }
 
 .stat-divider {
   width: 2rpx;
-  background: #EBEEF5;
-  margin: 0 20rpx;
+  background: linear-gradient(180deg, transparent, #E5E7EB, transparent);
+  margin: 0 24rpx;
 }
 
 .menu-section {
   background: #fff;
-  border-radius: 16rpx;
+  border-radius: 24rpx;
   overflow: hidden;
-  margin-bottom: 20rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
 }
 
 .menu-section .section-title {
-  padding: 20rpx 30rpx 10rpx;
+  padding: 24rpx 32rpx 16rpx;
   font-size: 26rpx;
-  color: #909399;
-  background: #f5f7fa;
+  font-weight: 600;
+  color: #6B7280;
+  background: #F9FAFB;
+  letter-spacing: 0.5rpx;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
-  padding: 30rpx;
-  border-bottom: 1rpx solid #EBEEF5;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #F3F4F6;
+  transition: all 0.2s ease;
 }
 
 .menu-item:last-child {
   border-bottom: none;
 }
 
+.menu-item:active {
+  background: #F9FAFB;
+}
+
 .menu-icon {
-  font-size: 40rpx;
-  margin-right: 20rpx;
+  font-size: 44rpx;
+  margin-right: 24rpx;
 }
 
 .menu-text {
   flex: 1;
-  font-size: 30rpx;
-  color: #303133;
+  font-size: 32rpx;
+  color: #1F2937;
+  font-weight: 500;
 }
 
 .menu-arrow {
-  font-size: 36rpx;
-  color: #C0C4CC;
+  font-size: 40rpx;
+  color: #D1D5DB;
+  font-weight: 300;
 }
 
 .logout-btn {
   width: 100%;
-  height: 96rpx;
-  line-height: 96rpx;
+  height: 104rpx;
+  line-height: 104rpx;
   background: #fff;
-  color: #F56C6C;
-  font-size: 32rpx;
+  color: #EF4444;
+  font-size: 34rpx;
+  font-weight: 600;
   border: none;
-  border-radius: 16rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.logout-btn:active {
+  background: #FEF2F2;
+  transform: scale(0.98);
 }
 
 .logout-btn::after {
@@ -140,8 +198,9 @@
 
 .version-info {
   text-align: center;
-  padding: 40rpx;
-  color: #C0C4CC;
-  font-size: 24rpx;
+  padding: 48rpx;
+  color: #9CA3AF;
+  font-size: 26rpx;
+  letter-spacing: 0.5rpx;
 }
 

@@ -1,52 +1,59 @@
-/* pages/user-management/user-management.wxss */
+/* pages/user-management/user-management.wxss - UI/UX Pro Max */
 .container {
-  padding: 30rpx;
+  padding: 32rpx;
   min-height: 100vh;
-  background: #f5f7fa;
+  background: linear-gradient(180deg, #F8FAFC 0%, #EEF2FF 100%);
 }
 
 .header {
   text-align: center;
-  padding: 40rpx 0 40rpx;
+  padding: 48rpx 0 40rpx;
 }
 
 .header-title {
-  font-size: 44rpx;
-  font-weight: bold;
-  color: #303133;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #1F2937;
   display: block;
+  letter-spacing: 1rpx;
 }
 
 .header-desc {
-  font-size: 26rpx;
-  color: #909399;
+  font-size: 28rpx;
+  color: #6B7280;
   margin-top: 16rpx;
   display: block;
 }
 
 .loading-tip, .empty-tip {
   text-align: center;
-  padding: 60rpx;
-  color: #909399;
-  font-size: 28rpx;
+  padding: 80rpx;
+  color: #9CA3AF;
+  font-size: 30rpx;
 }
 
 .user-list {
   background: #fff;
-  border-radius: 16rpx;
+  border-radius: 24rpx;
   overflow: hidden;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.06);
 }
 
 .user-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 30rpx;
-  border-bottom: 1rpx solid #EBEEF5;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #F3F4F6;
+  transition: background 0.2s ease;
 }
 
 .user-item:last-child {
   border-bottom: none;
+}
+
+.user-item:active {
+  background: #F9FAFB;
 }
 
 .user-info {
@@ -56,20 +63,21 @@
 }
 
 .user-avatar {
-  width: 80rpx;
-  height: 80rpx;
-  background: linear-gradient(135deg, #409EFF 0%, #337ecc 100%);
+  width: 88rpx;
+  height: 88rpx;
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 24rpx;
+  margin-right: 28rpx;
+  box-shadow: 0 8rpx 20rpx rgba(99, 102, 241, 0.3);
 }
 
 .user-avatar text {
   color: #fff;
-  font-size: 32rpx;
-  font-weight: bold;
+  font-size: 36rpx;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -78,55 +86,58 @@
 }
 
 .user-name {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #303133;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1F2937;
 }
 
 .user-meta {
   display: flex;
   align-items: center;
-  margin-top: 8rpx;
+  margin-top: 10rpx;
 }
 
 .real-name {
   font-size: 26rpx;
-  color: #606266;
+  color: #6B7280;
   margin-right: 16rpx;
 }
 
 .role-tag {
   font-size: 22rpx;
-  padding: 4rpx 12rpx;
-  background: #e6f7ff;
-  color: #409EFF;
-  border-radius: 6rpx;
+  padding: 6rpx 14rpx;
+  background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+  color: #6366F1;
+  border-radius: 8rpx;
+  font-weight: 500;
 }
 
 .role-tag.admin {
-  background: #fff7e6;
-  color: #fa8c16;
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  color: #D97706;
 }
 
 .user-status {
   display: flex;
   align-items: center;
-  margin-top: 8rpx;
+  margin-top: 10rpx;
 }
 
 .status-dot {
-  width: 12rpx;
-  height: 12rpx;
+  width: 14rpx;
+  height: 14rpx;
   border-radius: 50%;
-  margin-right: 8rpx;
+  margin-right: 10rpx;
 }
 
 .status-dot.active {
-  background: #67C23A;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  box-shadow: 0 0 8rpx rgba(16, 185, 129, 0.5);
 }
 
 .status-dot.inactive {
-  background: #F56C6C;
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  box-shadow: 0 0 8rpx rgba(239, 68, 68, 0.5);
 }
 
 
@@ -138,8 +149,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   z-index: 100;
+  backdrop-filter: blur(8rpx);
 }
 
 .modal-dialog {
@@ -147,95 +159,111 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600rpx;
+  width: 640rpx;
   background: #fff;
-  border-radius: 16rpx;
+  border-radius: 24rpx;
   z-index: 101;
   overflow: hidden;
+  box-shadow: 0 32rpx 80rpx rgba(0, 0, 0, 0.25);
 }
 
 .modal-header {
-  padding: 30rpx;
+  padding: 36rpx;
   text-align: center;
-  border-bottom: 1rpx solid #EBEEF5;
+  border-bottom: 1rpx solid #F3F4F6;
+  background: #F9FAFB;
 }
 
 .modal-title {
-  font-size: 34rpx;
-  font-weight: bold;
-  color: #303133;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1F2937;
 }
 
 .modal-body {
-  padding: 30rpx;
+  padding: 36rpx;
 }
 
 .modal-tip {
-  font-size: 28rpx;
-  color: #606266;
-  margin-bottom: 30rpx;
+  font-size: 30rpx;
+  color: #6B7280;
+  margin-bottom: 32rpx;
   text-align: center;
 }
 
 .modal-tip .highlight {
-  color: #409EFF;
-  font-weight: bold;
+  color: #6366F1;
+  font-weight: 600;
 }
 
 .input-group {
-  margin-bottom: 20rpx;
+  margin-bottom: 24rpx;
 }
 
 .input-label {
   font-size: 28rpx;
-  color: #606266;
+  font-weight: 500;
+  color: #374151;
   margin-bottom: 12rpx;
   display: block;
 }
 
 .input {
   width: 100%;
-  height: 80rpx;
-  background: #f5f7fa;
-  border-radius: 12rpx;
-  padding: 0 20rpx;
-  font-size: 30rpx;
+  height: 96rpx;
+  background: #F8FAFC;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  font-size: 32rpx;
   box-sizing: border-box;
+  border: 2rpx solid transparent;
+  transition: all 0.25s ease;
+}
+
+.input:focus {
+  background: #fff;
+  border-color: #6366F1;
+  box-shadow: 0 0 0 6rpx rgba(99, 102, 241, 0.1);
 }
 
 .input-hint {
   font-size: 24rpx;
-  color: #909399;
+  color: #9CA3AF;
   margin-top: 12rpx;
 }
 
 .modal-footer {
   display: flex;
-  border-top: 1rpx solid #EBEEF5;
+  border-top: 1rpx solid #F3F4F6;
 }
 
 .modal-btn {
   flex: 1;
-  height: 96rpx;
-  line-height: 96rpx;
-  font-size: 32rpx;
+  height: 104rpx;
+  line-height: 104rpx;
+  font-size: 34rpx;
   border: none;
   border-radius: 0;
   background: #fff;
+  transition: background 0.2s ease;
 }
 
 .modal-btn::after {
   border: none;
 }
 
+.modal-btn:active {
+  background: #F9FAFB;
+}
+
 .cancel-btn {
-  color: #606266;
-  border-right: 1rpx solid #EBEEF5;
+  color: #6B7280;
+  border-right: 1rpx solid #F3F4F6;
 }
 
 .confirm-btn {
-  color: #409EFF;
-  font-weight: bold;
+  color: #6366F1;
+  font-weight: 600;
 }
 
 .user-actions {
@@ -243,10 +271,12 @@
 }
 
 .action-btn {
-  font-size: 24rpx;
-  padding: 12rpx 24rpx;
-  border-radius: 8rpx;
+  font-size: 26rpx;
+  padding: 16rpx 28rpx;
+  border-radius: 12rpx;
   line-height: 1.5;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .action-btn::after {
@@ -254,7 +284,12 @@
 }
 
 .reset-btn {
-  background: #409EFF;
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
   color: #fff;
+  box-shadow: 0 6rpx 16rpx rgba(99, 102, 241, 0.3);
+}
+
+.reset-btn:active {
+  transform: scale(0.95);
 }
 
