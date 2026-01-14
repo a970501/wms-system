@@ -1,0 +1,76 @@
+<!-- pages/user-management/user-management.wxml -->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="header">
+    <text class="header-title">用户管理</text>
+    <text class="header-desc">管理系统用户，重置密码</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-tip" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 用户列表 -->
+  <view class="user-list" wx:if="{{!loading}}">
+    <view class="user-item" wx:for="{{users}}" wx:key="id">
+      <view class="user-info">
+        <view class="user-avatar">
+          <text>{{item.username[0] || 'U'}}</text>
+        </view>
+        <view class="user-detail">
+          <view class="user-name">{{item.username}}</view>
+          <view class="user-meta">
+            <text class="real-name">{{item.realName || '未设置'}}</text>
+            <text class="role-tag {{item.role === 'ADMIN' ? 'admin' : ''}}">
+              {{item.role === 'ADMIN' ? '管理员' : (item.role === 'operator' ? '操作员' : '普通用户')}}
+            </text>
+          </view>
+          <view class="user-status">
+            <text class="status-dot {{item.status === 'active' ? 'active' : 'inactive'}}"></text>
+            <text class="status-text">{{item.status === 'active' ? '正常' : '禁用'}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="user-actions">
+        <button class="action-btn reset-btn" data-user="{{item}}" bindtap="showResetPassword">
+          重置密码
+        </button>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-tip" wx:if="{{users.length === 0}}">
+      <text>暂无用户数据</text>
+    </view>
+  </view>
+
+  <!-- 重置密码弹窗 -->
+  <view class="modal-mask" wx:if="{{resetPasswordVisible}}" bindtap="hideResetPassword"></view>
+  <view class="modal-dialog" wx:if="{{resetPasswordVisible}}">
+    <view class="modal-header">
+      <text class="modal-title">重置密码</text>
+    </view>
+    <view class="modal-body">
+      <view class="modal-tip">
+        为用户 <text class="highlight">{{selectedUser.username}}</text> 重置密码
+      </view>
+      <view class="input-group">
+        <text class="input-label">新密码</text>
+        <input 
+          class="input" 
+          type="text" 
+          placeholder="请输入新密码" 
+          value="{{newPassword}}" 
+          bindinput="onNewPasswordInput"
+        />
+      </view>
+      <view class="input-hint">默认密码：123456，建议用户登录后自行修改</view>
+    </view>
+    <view class="modal-footer">
+      <button class="modal-btn cancel-btn" bindtap="hideResetPassword">取消</button>
+      <button class="modal-btn confirm-btn" bindtap="confirmResetPassword">确认重置</button>
+    </view>
+  </view>
+</view>
+

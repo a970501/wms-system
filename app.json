@@ -15,6 +15,8 @@
     "pages/storage-logs/detail",
     "pages/audit-logs/logs",
     "pages/profile/profile",
+    "pages/change-password/change-password",
+    "pages/user-management/user-management",
     "pages/reconcile/reconcile",
     "pages/notification-settings/settings",
     "pages/developer-tools/developer-tools",

@@ -7,6 +7,7 @@ import com.wms.common.Result;
 import com.wms.entity.User;
 import com.wms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +18,12 @@ import java.util.Map;
 @RequireAuth
 @RequireRole({"ADMIN"})
 public class UserController {
-    
+
     @Autowired
     private UserRepository userRepository;
+
+    // 【安全加固】使用BCrypt密码编码器
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     
     @GetMapping
     public Result<List<User>> getAllUsers() {
@@ -43,10 +47,10 @@ public class UserController {
         if (userRepository.existsByUsername(user.getUsername())) {
             return Result.error("用户名已存在");
         }
-        
-        // 这里应该使用BCrypt加密密码，简化版本直接保存
-        // user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-        
+
+        // 【安全加固】使用BCrypt加密密码
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         User saved = userRepository.save(user);
         saved.setPassword("******");
         return Result.success(saved);
@@ -87,11 +91,10 @@ public class UserController {
         if (user == null) {
             return Result.error("用户不存在");
         }
-        
+
         String newPassword = body.get("password");
-        // 这里应该使用BCrypt加密
-        // user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
-        user.setPassword(newPassword);
+        // 【安全加固】使用BCrypt加密密码
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
         return Result.success();
     }

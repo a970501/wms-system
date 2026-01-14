@@ -1,0 +1,260 @@
+/* pages/user-management/user-management.wxss */
+.container {
+  padding: 30rpx;
+  min-height: 100vh;
+  background: #f5f7fa;
+}
+
+.header {
+  text-align: center;
+  padding: 40rpx 0 40rpx;
+}
+
+.header-title {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #303133;
+  display: block;
+}
+
+.header-desc {
+  font-size: 26rpx;
+  color: #909399;
+  margin-top: 16rpx;
+  display: block;
+}
+
+.loading-tip, .empty-tip {
+  text-align: center;
+  padding: 60rpx;
+  color: #909399;
+  font-size: 28rpx;
+}
+
+.user-list {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #EBEEF5;
+}
+
+.user-item:last-child {
+  border-bottom: none;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  background: linear-gradient(135deg, #409EFF 0%, #337ecc 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+}
+
+.user-avatar text {
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.user-detail {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #303133;
+}
+
+.user-meta {
+  display: flex;
+  align-items: center;
+  margin-top: 8rpx;
+}
+
+.real-name {
+  font-size: 26rpx;
+  color: #606266;
+  margin-right: 16rpx;
+}
+
+.role-tag {
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  background: #e6f7ff;
+  color: #409EFF;
+  border-radius: 6rpx;
+}
+
+.role-tag.admin {
+  background: #fff7e6;
+  color: #fa8c16;
+}
+
+.user-status {
+  display: flex;
+  align-items: center;
+  margin-top: 8rpx;
+}
+
+.status-dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  margin-right: 8rpx;
+}
+
+.status-dot.active {
+  background: #67C23A;
+}
+
+.status-dot.inactive {
+  background: #F56C6C;
+}
+
+
+
+/* 弹窗样式 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.modal-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  z-index: 101;
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 30rpx;
+  text-align: center;
+  border-bottom: 1rpx solid #EBEEF5;
+}
+
+.modal-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #303133;
+}
+
+.modal-body {
+  padding: 30rpx;
+}
+
+.modal-tip {
+  font-size: 28rpx;
+  color: #606266;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.modal-tip .highlight {
+  color: #409EFF;
+  font-weight: bold;
+}
+
+.input-group {
+  margin-bottom: 20rpx;
+}
+
+.input-label {
+  font-size: 28rpx;
+  color: #606266;
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.input {
+  width: 100%;
+  height: 80rpx;
+  background: #f5f7fa;
+  border-radius: 12rpx;
+  padding: 0 20rpx;
+  font-size: 30rpx;
+  box-sizing: border-box;
+}
+
+.input-hint {
+  font-size: 24rpx;
+  color: #909399;
+  margin-top: 12rpx;
+}
+
+.modal-footer {
+  display: flex;
+  border-top: 1rpx solid #EBEEF5;
+}
+
+.modal-btn {
+  flex: 1;
+  height: 96rpx;
+  line-height: 96rpx;
+  font-size: 32rpx;
+  border: none;
+  border-radius: 0;
+  background: #fff;
+}
+
+.modal-btn::after {
+  border: none;
+}
+
+.cancel-btn {
+  color: #606266;
+  border-right: 1rpx solid #EBEEF5;
+}
+
+.confirm-btn {
+  color: #409EFF;
+  font-weight: bold;
+}
+
+.user-actions {
+  margin-left: 20rpx;
+}
+
+.action-btn {
+  font-size: 24rpx;
+  padding: 12rpx 24rpx;
+  border-radius: 8rpx;
+  line-height: 1.5;
+}
+
+.action-btn::after {
+  border: none;
+}
+
+.reset-btn {
+  background: #409EFF;
+  color: #fff;
+}
+

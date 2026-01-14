@@ -65,7 +65,12 @@
 
   <!-- 日志管理（仅管理员可见） -->
   <view class="menu-section" wx:if="{{userInfo.role === 'ADMIN'}}">
-    <view class="section-title">日志管理</view>
+    <view class="section-title">系统管理</view>
+    <view class="menu-item" bindtap="goToUserManagement">
+      <text class="menu-icon">👥</text>
+      <text class="menu-text">用户管理</text>
+      <text class="menu-arrow">›</text>
+    </view>
     <view class="menu-item" bindtap="goToStorageLogs">
       <text class="menu-icon">📊</text>
       <text class="menu-text">入库日志</text>
@@ -90,6 +95,11 @@
 
   <!-- 其他设置 -->
   <view class="menu-section">
+    <view class="menu-item" bindtap="goToChangePassword">
+      <text class="menu-icon">🔐</text>
+      <text class="menu-text">修改密码</text>
+      <text class="menu-arrow">›</text>
+    </view>
     <view class="menu-item" bindtap="goToWebsite">
       <text class="menu-icon">🌐</text>
       <text class="menu-text">网页版</text>

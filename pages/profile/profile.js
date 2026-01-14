@@ -116,6 +116,14 @@ Page({
     wx.navigateTo({ url: '/pages/price-table/price-table' })
   },
 
+  goToChangePassword() {
+    wx.navigateTo({ url: '/pages/change-password/change-password' })
+  },
+
+  goToUserManagement() {
+    wx.navigateTo({ url: '/pages/user-management/user-management' })
+  },
+
   goToWebsite() {
     wx.setClipboardData({
       data: 'https://cl.bxyxr.com',
