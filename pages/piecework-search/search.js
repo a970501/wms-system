@@ -51,22 +51,18 @@ Page({
 
   loadFilterOptions: function() {
     var self = this
-    // 加载工人名单
-    var userInfo = app.globalData.userInfo || wx.getStorageSync('userInfo') || {}
-    app.request({ url: '/users' }).then(function(res) {
-      var users = res.data || []
-      console.log('【用户数据】前3个用户:', users.slice(0, 3))
-      // 使用 nickname（昵称）或 realName（真实姓名）或 username（用户名）
-      var userNames = users.map(function(u) {
-        return u.nickname || u.realName || u.name || u.username
+
+    // 使用新的工人列表接口（所有用户可访问）
+    app.request({ url: '/users/workers' }).then(function(res) {
+      var workers = res.data || []
+      var workerNames = workers.map(function(w) {
+        return w.displayName || w.username
       })
-      var names = ['全部'].concat(userNames)
-      console.log('【工人名列表】', names)
-      self.setData({ workerNames: names, userList: users })
-    }).catch(function() {
-      // 非管理员无法访问 /users 时的降级：只允许筛自己
-      var me = userInfo.username || '自己'
-      self.setData({ workerNames: ['全部', me], userList: [] })
+      var names = ['全部'].concat(workerNames)
+      self.setData({ workerNames: names, userList: workers })
+    }).catch(function(err) {
+      console.error('获取工人列表失败', err)
+      self.setData({ workerNames: ['全部'], userList: [] })
     })
 
     // 加载产品名称和规格
@@ -147,12 +143,9 @@ Page({
     wx.showLoading({ title: '查询中...' })
     var startDate = this.data.startDate
     var endDate = this.data.endDate
-    var userInfo = app.globalData.userInfo || wx.getStorageSync('userInfo') || {}
-    // 仅管理员可以 queryAll=true
-    var url = '/piecework?startDate=' + startDate + '&endDate=' + endDate
-    if (userInfo.role === 'ADMIN') {
-      url += '&queryAll=true'
-    }
+
+    // 所有用户都可以查询所有数据
+    var url = '/piecework?startDate=' + startDate + '&endDate=' + endDate + '&queryAll=true'
 
     console.log('【高级查询】请求URL:', url)
 
@@ -166,26 +159,13 @@ Page({
       } else if (res.data && Array.isArray(res.data.content)) {
         records = res.data.content
       } else if (res.data && typeof res.data === 'object') {
-        // 可能是其他格式
         records = res.data.records || res.data.list || []
       }
 
       console.log('【高级查询】解析记录数:', records.length)
-      if (records.length > 0) {
-        console.log('【高级查询】第一条数据全部字段:', records[0])
-        console.log('【高级查询】selectedWorker=', self.data.selectedWorker)
-        console.log('【高级查询】记录中的工人相关字段:', {
-          workerName: records[0].workerName,
-          worker_name: records[0].worker_name,
-          worker: records[0].worker,
-          username: records[0].username,
-          userId: records[0].userId,
-          user_id: records[0].user_id
-        })
-      }
 
       records = self.applyFilters(records)
-      console.log('【高级查询】过滤后记录数:', records.length)
+      console.log('【高级查询】应用筛选后记录数:', records.length)
 
       self.calcStats(records)
       self.setData({ records: records, searched: true })

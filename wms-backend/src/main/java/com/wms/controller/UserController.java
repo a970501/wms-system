@@ -10,13 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
 @RequireAuth
-@RequireRole({"ADMIN"})
 public class UserController {
 
     @Autowired
@@ -24,16 +25,37 @@ public class UserController {
 
     // 【安全加固】使用BCrypt密码编码器
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    
+
+    /**
+     * 获取所有用户列表（仅管理员）
+     */
     @GetMapping
+    @RequireRole({"ADMIN"})
     public Result<List<User>> getAllUsers() {
         List<User> users = userRepository.findAll();
         // 隐藏密码
         users.forEach(u -> u.setPassword("******"));
         return Result.success(users);
     }
-    
+
+    /**
+     * 获取工人名单（所有登录用户可访问，用于高级查询筛选）
+     * 只返回用户名和显示名，不返回敏感信息
+     */
+    @GetMapping("/workers")
+    public Result<List<Map<String, String>>> getWorkerList() {
+        List<User> users = userRepository.findAll();
+        List<Map<String, String>> workers = users.stream().map(u -> {
+            Map<String, String> worker = new HashMap<>();
+            worker.put("username", u.getUsername());
+            worker.put("displayName", u.getRealName() != null ? u.getRealName() : u.getUsername());
+            return worker;
+        }).collect(Collectors.toList());
+        return Result.success(workers);
+    }
+
     @GetMapping("/{id}")
+    @RequireRole({"ADMIN"})
     public Result<User> getUserById(@PathVariable Long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
@@ -41,8 +63,9 @@ public class UserController {
         }
         return Result.success(user);
     }
-    
+
     @PostMapping
+    @RequireRole({"ADMIN"})
     public Result<User> createUser(@RequestBody User user) {
         if (userRepository.existsByUsername(user.getUsername())) {
             return Result.error("用户名已存在");
@@ -55,28 +78,30 @@ public class UserController {
         saved.setPassword("******");
         return Result.success(saved);
     }
-    
+
     @Auditable(module = "用户管理", action = "更新用户")
     @PutMapping("/{id}")
+    @RequireRole({"ADMIN"})
     public Result<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         User existing = userRepository.findById(id).orElse(null);
         if (existing == null) {
             return Result.error("用户不存在");
         }
-        
+
         // 更新字段（不更新密码）
         existing.setRealName(user.getRealName());
         existing.setEmail(user.getEmail());
         existing.setPhone(user.getPhone());
         existing.setRole(user.getRole());
         existing.setStatus(user.getStatus());
-        
+
         User updated = userRepository.save(existing);
         updated.setPassword("******");
         return Result.success(updated);
     }
-    
+
     @DeleteMapping("/{id}")
+    @RequireRole({"ADMIN"})
     public Result<Void> deleteUser(@PathVariable Long id) {
         if (!userRepository.existsById(id)) {
             return Result.error("用户不存在");
@@ -84,8 +109,9 @@ public class UserController {
         userRepository.deleteById(id);
         return Result.success();
     }
-    
+
     @PutMapping("/{id}/reset-password")
+    @RequireRole({"ADMIN"})
     public Result<Void> resetPassword(@PathVariable Long id, @RequestBody Map<String, String> body) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null) {
@@ -98,8 +124,9 @@ public class UserController {
         userRepository.save(user);
         return Result.success();
     }
-    
+
     @PutMapping("/{id}/toggle-status")
+    @RequireRole({"ADMIN"})
     public Result<Void> toggleStatus(@PathVariable Long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null) {
@@ -112,6 +139,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/role")
+    @RequireRole({"ADMIN"})
     public Result<Void> updateRole(@PathVariable Long id, @RequestBody Map<String, String> body) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null) {
