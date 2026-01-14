@@ -1,0 +1,253 @@
+/* pages/price-table/price-table.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 页面头部 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  background: white;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.1);
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.header-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-btn {
+  padding: 12rpx 24rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  border: none;
+}
+
+.add-btn {
+  background: #007aff;
+  color: white;
+}
+
+.export-btn {
+  background: #34c759;
+  color: white;
+}
+
+.edit-btn {
+  background: #ff9500;
+  color: white;
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+}
+
+.delete-btn {
+  background: #ff3b30;
+  color: white;
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+}
+
+/* 单价列表 */
+.price-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.price-item {
+  background: white;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-content {
+  flex: 1;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.product-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.unit-price {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #007aff;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.detail-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.item-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin-left: 20rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 100rpx 0;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #999;
+  margin-bottom: 40rpx;
+  display: block;
+}
+
+.add-first-btn {
+  background: #007aff;
+  color: white;
+  border-radius: 8rpx;
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+  border: none;
+}
+
+/* 对话框 */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.dialog {
+  background: white;
+  border-radius: 16rpx;
+  width: 90%;
+  max-width: 600rpx;
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.dialog-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.dialog-close {
+  font-size: 40rpx;
+  color: #999;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-content {
+  padding: 30rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.input {
+  width: 100%;
+  padding: 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.picker {
+  width: 100%;
+  padding: 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+  background: white;
+}
+
+.dialog-actions {
+  display: flex;
+  border-top: 1rpx solid #eee;
+}
+
+.dialog-btn {
+  flex: 1;
+  padding: 30rpx;
+  font-size: 28rpx;
+  border: none;
+  background: white;
+  color: #333;
+}
+
+.confirm-btn {
+  color: #007aff;
+  border-left: 1rpx solid #eee;
+}
+
+.cancel-btn {
+  color: #999;
+}

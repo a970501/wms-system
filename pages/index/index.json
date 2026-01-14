@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "仓库管理系统",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "offline-status": "/components/offline-status/offline-status"
+  }
+}
+

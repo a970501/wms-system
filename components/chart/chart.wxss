@@ -1,0 +1,36 @@
+/* components/chart/chart.wxss */
+.chart-container {
+  position: relative;
+  background-color: #fff;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.chart-canvas {
+  display: block;
+}
+
+.chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #909399;
+}
+
+.loading-text {
+  font-size: 28rpx;
+}
+
+.chart-actions {
+  position: absolute;
+  top: 10rpx;
+  right: 10rpx;
+}
+
+.export-btn {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #409eff;
+  border: 1rpx solid #409eff;
+  font-size: 24rpx;
+}

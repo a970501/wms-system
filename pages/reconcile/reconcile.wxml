@@ -1,0 +1,110 @@
+<view class="container">
+  <view class="card">
+    <view class="row">
+      <text class="label">用户A</text>
+      <picker mode="selector" range="{{userLabels}}" value="{{userAIndex}}" bindchange="onUserAChange">
+        <view class="picker placeholder" wx:if="{{!userASelected}}">请选择</view>
+        <view class="picker" wx:else>{{userLabels[userAIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="row">
+      <text class="label">用户B</text>
+      <picker mode="selector" range="{{userLabels}}" value="{{userBIndex}}" bindchange="onUserBChange">
+        <view class="picker placeholder" wx:if="{{!userBSelected}}">请选择</view>
+        <view class="picker" wx:else>{{userLabels[userBIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="row">
+      <text class="label">开始日期</text>
+      <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+        <view class="picker">{{startDate}}</view>
+      </picker>
+    </view>
+
+    <view class="row">
+      <text class="label">结束日期</text>
+      <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+        <view class="picker">{{endDate}}</view>
+      </picker>
+    </view>
+
+    <view class="btn-row">
+      <button class="btn primary" bindtap="reconcile" loading="{{loading}}" disabled="{{loading}}">开始对账</button>
+      <button class="btn" bindtap="copyResult" disabled="{{loading}}">复制结果</button>
+      <button class="btn" bindtap="exportCsv" disabled="{{loading}}">导出CSV</button>
+    </view>
+  </view>
+
+  <view class="summary">
+    <view class="sum-item" bindtap="setTab" data-tab="diff">
+      <text class="sum-num">{{summary.diffCount}}</text>
+      <text class="sum-label">不一致</text>
+    </view>
+    <view class="sum-item" bindtap="setTab" data-tab="onlyA">
+      <text class="sum-num">{{summary.onlyACount}}</text>
+      <text class="sum-label">仅A</text>
+    </view>
+    <view class="sum-item" bindtap="setTab" data-tab="onlyB">
+      <text class="sum-num">{{summary.onlyBCount}}</text>
+      <text class="sum-label">仅B</text>
+    </view>
+  </view>
+
+  <view class="tabs">
+    <view class="tab {{diffTabClass}}" bindtap="setTab" data-tab="diff">不一致</view>
+    <view class="tab {{onlyATabClass}}" bindtap="setTab" data-tab="onlyA">仅A</view>
+    <view class="tab {{onlyBTabClass}}" bindtap="setTab" data-tab="onlyB">仅B</view>
+    <view class="tab {{statsTabClass}}" bindtap="setTab" data-tab="stats">产品统计</view>
+  </view>
+
+  <scroll-view scroll-y class="list">
+    <block wx:if="{{resultTab==='diff'}}">
+      <view class="item" wx:for="{{diffs}}" wx:key="key">
+        <view class="title">{{item.day}} {{item.productName}}</view>
+        <view class="sub">{{item.specification}} / {{item.material}} / {{item.connectionTypeDisplay}} / 单价{{item.unitPriceDisplay}}</view>
+        <view class="sub">A: {{item.aQty}} (¥{{item.aAmt}})  B: {{item.bQty}} (¥{{item.bAmt}})</view>
+      </view>
+    </block>
+
+    <block wx:if="{{resultTab==='onlyA'}}">
+      <view class="item" wx:for="{{onlyA}}" wx:key="key">
+        <view class="title">{{item.day}} {{item.productName}}</view>
+        <view class="sub">{{item.specification}} / {{item.material}} / {{item.connectionTypeDisplay}}</view>
+        <view class="sub">数量: {{item.qty}} 金额: ¥{{item.amountText}}</view>
+      </view>
+    </block>
+
+    <block wx:if="{{resultTab==='onlyB'}}">
+      <view class="item" wx:for="{{onlyB}}" wx:key="key">
+        <view class="title">{{item.day}} {{item.productName}}</view>
+        <view class="sub">{{item.specification}} / {{item.material}} / {{item.connectionTypeDisplay}}</view>
+        <view class="sub">数量: {{item.qty}} 金额: ¥{{item.amountText}}</view>
+      </view>
+    </block>
+
+    <block wx:if="{{resultTab==='stats'}}">
+      <view class="stats-section">
+        <view class="stats-title">用户A产品统计</view>
+        <view class="item" wx:for="{{productSummaryA}}" wx:key="productName">
+          <view class="title">{{item.productName}}</view>
+          <view class="sub">总数量: {{item.totalQty}}  总金额: ¥{{item.totalAmountText}}</view>
+        </view>
+        <view class="empty" wx:if="{{productSummaryA.length === 0}}">暂无数据</view>
+      </view>
+      <view class="stats-section">
+        <view class="stats-title">用户B产品统计</view>
+        <view class="item" wx:for="{{productSummaryB}}" wx:key="productName">
+          <view class="title">{{item.productName}}</view>
+          <view class="sub">总数量: {{item.totalQty}}  总金额: ¥{{item.totalAmountText}}</view>
+        </view>
+        <view class="empty" wx:if="{{productSummaryB.length === 0}}">暂无数据</view>
+      </view>
+    </block>
+
+    <view class="empty" wx:if="{{showEmpty}}">
+      暂无数据
+    </view>
+  </scroll-view>
+</view>

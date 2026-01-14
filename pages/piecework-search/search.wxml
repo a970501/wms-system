@@ -1,0 +1,117 @@
+<!-- pages/piecework-search/search.wxml -->
+<view class="container">
+  <!-- 筛选条件 -->
+  <view class="filter-card">
+    <view class="filter-title">筛选条件</view>
+
+    <!-- 工人姓名 -->
+    <view class="filter-row">
+      <text class="filter-label">工人姓名</text>
+      <picker range="{{workerNames}}" value="{{workerIndex}}" bindchange="onWorkerChange">
+        <view class="filter-picker">{{selectedWorker || '全部'}}</view>
+      </picker>
+    </view>
+
+    <!-- 产品名称 -->
+    <view class="filter-row">
+      <text class="filter-label">产品名称</text>
+      <picker range="{{productNames}}" value="{{productIndex}}" bindchange="onProductChange">
+        <view class="filter-picker">{{selectedProduct || '全部'}}</view>
+      </picker>
+    </view>
+
+    <!-- 规格 -->
+    <view class="filter-row">
+      <text class="filter-label">规格</text>
+      <picker range="{{specifications}}" value="{{specIndex}}" bindchange="onSpecChange">
+        <view class="filter-picker">{{selectedSpec || '全部'}}</view>
+      </picker>
+    </view>
+
+    <!-- 材质 -->
+    <view class="filter-row">
+      <text class="filter-label">材质</text>
+      <picker range="{{materials}}" value="{{materialIndex}}" bindchange="onMaterialChange">
+        <view class="filter-picker">{{selectedMaterial || '全部'}}</view>
+      </picker>
+    </view>
+
+    <!-- 日期范围 -->
+    <view class="filter-row">
+      <text class="filter-label">日期范围</text>
+      <view class="date-range">
+        <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+          <view class="date-picker">{{startDate || '开始'}}</view>
+        </picker>
+        <text class="date-sep">至</text>
+        <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+          <view class="date-picker">{{endDate || '结束'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 快捷筛选 -->
+    <view class="quick-filters">
+      <view class="quick-btn {{onlySemi ? 'active' : ''}}" bindtap="toggleSemi">只看半成品</view>
+      <view class="quick-btn {{onlyFinished ? 'active' : ''}}" bindtap="toggleFinished">只看成品</view>
+      <view class="quick-btn {{onlyDefect ? 'active' : ''}}" bindtap="toggleDefect">只看报废</view>
+    </view>
+
+    <!-- 按钮 -->
+    <view class="filter-btns">
+      <view class="reset-btn" bindtap="resetFilter">重置</view>
+      <view class="search-btn" bindtap="doSearch">查询</view>
+    </view>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="summary-card" wx:if="{{searched}}">
+    <view class="summary-left">
+      <view class="summary-item">
+        <text class="summary-value">{{records.length}}</text>
+        <text class="summary-label">条记录</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-value">{{totalQuantity}}</text>
+        <text class="summary-label">总数量</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-value text-success">¥{{totalAmount}}</text>
+        <text class="summary-label">总金额</text>
+      </view>
+    </view>
+    <view class="export-btn" bindtap="exportToExcel" wx:if="{{records.length > 0}}">
+      <text class="export-icon">📊</text>
+      <text>导出Excel</text>
+    </view>
+  </view>
+
+  <!-- 结果列表 -->
+  <view class="results-section" wx:if="{{searched}}">
+    <scroll-view scroll-y class="results-list" wx:if="{{records.length > 0}}">
+      <view class="record-card {{item.defectQuantity > 0 ? 'has-defect' : ''}}" 
+        wx:for="{{records}}" wx:key="id" bindtap="goToDetail" data-record="{{item}}">
+        <view class="defect-badge" wx:if="{{item.defectQuantity > 0}}">报废{{item.defectQuantity}}</view>
+        <view class="record-header">
+          <text class="product-name">{{item.productName}}</text>
+          <text class="semi-tag" wx:if="{{item.semiFinished === '是'}}">半成品</text>
+          <text class="worker-name">{{item.workerName}}</text>
+        </view>
+        <view class="record-specs">
+          <text class="spec-tag">{{item.specification}}</text>
+          <text class="spec-tag">{{item.material}}</text>
+          <text class="work-date">{{item.workDate ? item.workDate.substring(0, 10) : ''}}</text>
+        </view>
+        <view class="record-footer">
+          <text class="quantity">{{item.quantity}} {{item.unit || '个'}}</text>
+          <text class="amount">¥{{item.totalAmount}}</text>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="empty-state" wx:else>
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">未找到符合条件的记录</text>
+    </view>
+  </view>
+</view>
+

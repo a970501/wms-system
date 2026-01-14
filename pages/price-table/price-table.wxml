@@ -1,0 +1,120 @@
+<!-- pages/price-table/price-table.wxml -->
+<view class="container">
+  <!-- 页面标题和操作按钮 -->
+  <view class="header">
+    <view class="title">单价表管理</view>
+    <view class="header-actions">
+      <button class="action-btn export-btn" bindtap="exportPriceList">导出</button>
+      <button class="action-btn add-btn" bindtap="showAddDialog">添加</button>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 单价列表 -->
+  <view class="price-list" wx:if="{{!loading}}">
+    <view class="price-item" wx:for="{{priceList}}" wx:key="id">
+      <view class="item-content">
+        <view class="item-header">
+          <text class="product-name">{{item.productName}}</text>
+          <text class="unit-price">¥{{item.unitPrice}}</text>
+        </view>
+        <view class="item-details">
+          <text class="detail-text">规格：{{item.specification}}</text>
+          <text class="detail-text">材质：{{item.material}}</text>
+          <text class="detail-text" wx:if="{{item.connectionType}}">连接：{{item.connectionType}}</text>
+          <text class="detail-text">单位：{{item.unit || '个'}}</text>
+        </view>
+      </view>
+      <view class="item-actions">
+        <button class="action-btn edit-btn" bindtap="showEditDialog" data-item="{{item}}">编辑</button>
+        <button class="action-btn delete-btn" bindtap="deletePriceItem" data-item="{{item}}">删除</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!loading && priceList.length === 0}}">
+    <text class="empty-text">暂无单价记录</text>
+    <button class="add-first-btn" bindtap="showAddDialog">添加第一条记录</button>
+  </view>
+
+  <!-- 添加/编辑对话框 -->
+  <view class="dialog-overlay" wx:if="{{showAddDialog}}" bindtap="hideAddDialog">
+    <view class="dialog" catchtap="">
+      <view class="dialog-header">
+        <text class="dialog-title">{{editingItem ? '编辑单价' : '添加单价'}}</text>
+        <text class="dialog-close" bindtap="hideAddDialog">×</text>
+      </view>
+      
+      <view class="dialog-content">
+        <view class="form-item">
+          <text class="label">产品名称</text>
+          <input 
+            class="input" 
+            placeholder="请输入产品名称" 
+            value="{{formData.productName}}"
+            data-field="productName"
+            bindinput="onFormInput"
+          />
+        </view>
+        
+        <view class="form-item">
+          <text class="label">规格</text>
+          <input 
+            class="input" 
+            placeholder="请输入规格" 
+            value="{{formData.specification}}"
+            data-field="specification"
+            bindinput="onFormInput"
+          />
+        </view>
+        
+        <view class="form-item">
+          <text class="label">材质</text>
+          <picker mode="selector" range="{{materialOptions}}" value="{{materialIndex}}" bindchange="onMaterialChange">
+            <view class="picker">{{formData.material || '请选择材质'}}</view>
+          </picker>
+        </view>
+        
+        <view class="form-item">
+          <text class="label">连接类型</text>
+          <picker mode="selector" range="{{connectionTypeOptions}}" value="{{connectionTypeIndex}}" bindchange="onConnectionTypeChange">
+            <view class="picker">{{formData.connectionType || '无'}}</view>
+          </picker>
+        </view>
+        
+        <view class="form-item">
+          <text class="label">单价（元）</text>
+          <input 
+            class="input" 
+            type="digit"
+            placeholder="请输入单价" 
+            value="{{formData.unitPrice}}"
+            data-field="unitPrice"
+            bindinput="onFormInput"
+          />
+        </view>
+        
+        <view class="form-item">
+          <text class="label">单位</text>
+          <input 
+            class="input" 
+            placeholder="请输入单位" 
+            value="{{formData.unit}}"
+            data-field="unit"
+            bindinput="onFormInput"
+          />
+        </view>
+      </view>
+      
+      <view class="dialog-actions">
+        <button class="dialog-btn cancel-btn" bindtap="hideAddDialog">取消</button>
+        <button class="dialog-btn confirm-btn" bindtap="savePriceItem">{{editingItem ? '修改' : '添加'}}</button>
+      </view>
+    </view>
+  </view>
+</view>

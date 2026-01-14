@@ -1,0 +1,57 @@
+<!-- pages/audit-logs/logs.wxml -->
+<view class="container">
+  <!-- 统计卡片 -->
+  <view class="stats-section">
+    <view class="stat-card">
+      <text class="stat-value">{{statistics.total || 0}}</text>
+      <text class="stat-label">总操作数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-value primary">{{statistics.today || 0}}</text>
+      <text class="stat-label">今日操作</text>
+    </view>
+  </view>
+
+  <!-- 筛选区域 -->
+  <view class="filter-section">
+    <picker class="filter-picker" mode="selector" range="{{modules}}" value="{{moduleIndex}}" bindchange="onModuleChange">
+      <view class="picker-view">
+        <text class="picker-text">{{moduleIndex >= 0 ? modules[moduleIndex] : '全部模块'}}</text>
+        <text class="picker-arrow">▼</text>
+      </view>
+    </picker>
+    <button class="filter-btn" bindtap="clearFilters">重置</button>
+  </view>
+
+  <!-- 日志列表 -->
+  <view class="logs-list">
+    <view class="log-item" wx:for="{{logs}}" wx:key="id">
+      <view class="log-header">
+        <text class="log-user">{{item.username}}</text>
+        <text class="log-time">{{item.created_at}}</text>
+      </view>
+      <view class="log-content">
+        <text class="log-module">{{item.module}}</text>
+        <text class="log-separator">•</text>
+        <text class="log-action">{{item.action}}</text>
+      </view>
+      <view class="log-details" wx:if="{{item.details}}">
+        <text class="details-text">{{item.details}}</text>
+      </view>
+      <view class="log-footer" wx:if="{{item.ip_address}}">
+        <text class="ip-text">IP: {{item.ip_address}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="load-more" wx:if="{{hasMore}}">
+    <button class="load-btn" bindtap="loadMore" loading="{{loading}}">加载更多</button>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{logs.length === 0 && !loading}}">
+    <text class="empty-icon">📝</text>
+    <text class="empty-text">暂无操作记录</text>
+  </view>
+</view>

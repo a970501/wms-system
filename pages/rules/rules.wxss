@@ -1,0 +1,49 @@
+/* pages/rules/rules.wxss */
+.container { padding: 20rpx; background: #f5f7fa; min-height: 100vh; padding-bottom: 140rpx; }
+.tabs { display: flex; background: #fff; border-radius: 16rpx; margin-bottom: 20rpx; overflow: hidden; }
+.tab { flex: 1; text-align: center; padding: 24rpx; font-size: 28rpx; color: #606266; }
+.tab.active { color: #409EFF; background: #ecf5ff; font-weight: bold; }
+
+.rules-list { max-height: calc(100vh - 260rpx); }
+.rule-item { background: #fff; border-radius: 16rpx; padding: 24rpx; margin-bottom: 16rpx; }
+.rule-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16rpx; }
+.rule-name { font-size: 32rpx; font-weight: bold; color: #303133; }
+.rule-switch { transform: scale(0.8); }
+.rule-info { display: flex; flex-wrap: wrap; gap: 12rpx; }
+.info-tag { font-size: 24rpx; color: #909399; background: #f5f7fa; padding: 6rpx 16rpx; border-radius: 8rpx; }
+
+.empty-state { text-align: center; padding: 80rpx; color: #909399; }
+
+/* 底部按钮组 */
+.bottom-btns { position: fixed; bottom: 40rpx; left: 40rpx; right: 40rpx; display: flex; gap: 16rpx; }
+.reapply-btn { flex: 1; background: #67C23A; color: #fff; text-align: center; padding: 24rpx; border-radius: 16rpx; font-size: 28rpx; display: flex; align-items: center; justify-content: center; gap: 8rpx; }
+.reapply-btn .icon { font-size: 32rpx; }
+.add-btn { flex: 1; background: #409EFF; color: #fff; text-align: center; padding: 24rpx; border-radius: 16rpx; font-size: 32rpx; }
+
+/* Modal */
+.modal-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 999; }
+.modal-content { background: #fff; border-radius: 20rpx; width: 90%; max-height: 85vh; display: flex; flex-direction: column; }
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 30rpx; border-bottom: 1rpx solid #ebeef5; }
+.modal-title { font-size: 32rpx; font-weight: bold; color: #303133; }
+.modal-close { font-size: 48rpx; color: #909399; line-height: 1; }
+.modal-body { padding: 30rpx; flex: 1; overflow-y: auto; max-height: 50vh; }
+.modal-footer { display: flex; gap: 20rpx; padding: 20rpx 30rpx 30rpx; border-top: 1rpx solid #ebeef5; }
+.modal-footer button { flex: 1; margin: 0; font-size: 28rpx; }
+.btn-cancel { background: #f5f7fa !important; color: #606266 !important; }
+.btn-delete { background: #fef0f0 !important; color: #f56c6c !important; }
+.btn-save { background: #409EFF !important; color: #fff !important; }
+
+.form-item { margin-bottom: 24rpx; }
+.label { font-size: 28rpx; color: #606266; margin-bottom: 12rpx; display: block; }
+.input { background: #f5f7fa; border-radius: 12rpx; padding: 20rpx; font-size: 28rpx; }
+.picker { background: #f5f7fa; border-radius: 12rpx; }
+.picker-view { padding: 20rpx; font-size: 28rpx; color: #303133; }
+.hint { font-size: 22rpx; color: #909399; margin-top: 8rpx; display: block; }
+
+.parts-list { background: #f5f7fa; border-radius: 12rpx; padding: 16rpx; }
+.part-item { display: flex; align-items: center; gap: 12rpx; margin-bottom: 12rpx; }
+.part-name { flex: 2; background: #fff; padding: 16rpx; border-radius: 8rpx; font-size: 26rpx; }
+.part-qty { width: 120rpx; background: #fff; padding: 16rpx; border-radius: 8rpx; font-size: 26rpx; text-align: center; }
+.part-delete { color: #f56c6c; font-size: 36rpx; padding: 0 12rpx; }
+.add-part-btn { text-align: center; color: #409EFF; font-size: 26rpx; padding: 16rpx; }
+

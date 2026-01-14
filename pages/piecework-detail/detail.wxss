@@ -1,0 +1,147 @@
+/* pages/piecework-detail/detail.wxss */
+.container {
+  padding: 20rpx;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.detail-card {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
+}
+
+.header {
+  padding: 30rpx;
+  background: linear-gradient(135deg, #1890ff 0%, #36cfc9 100%);
+  color: #fff;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.product-name {
+  font-size: 40rpx;
+  font-weight: bold;
+}
+
+.semi-tag {
+  background: #faad14;
+  color: #fff;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.work-date {
+  font-size: 26rpx;
+  opacity: 0.9;
+  margin-top: 10rpx;
+  display: block;
+}
+
+.section {
+  padding: 24rpx 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.section-title {
+  font-size: 28rpx;
+  color: #1890ff;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  padding-left: 16rpx;
+  border-left: 4rpx solid #1890ff;
+}
+
+.defective-title {
+  color: #ff4d4f;
+  border-left-color: #ff4d4f;
+}
+
+.info-row {
+  display: flex;
+  padding: 12rpx 0;
+}
+
+.label {
+  color: #999;
+  font-size: 28rpx;
+  width: 160rpx;
+  flex-shrink: 0;
+}
+
+.value {
+  color: #333;
+  font-size: 28rpx;
+  flex: 1;
+}
+
+.value.highlight {
+  color: #1890ff;
+  font-weight: bold;
+}
+
+.value.amount {
+  color: #52c41a;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.value.defective {
+  color: #ff4d4f;
+}
+
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400rpx;
+  color: #999;
+}
+
+.action-buttons {
+  padding: 30rpx;
+  background: #fff;
+  margin-top: 20rpx;
+  border-radius: 16rpx;
+  display: flex;
+  gap: 20rpx;
+}
+
+.delete-btn {
+  flex: 1;
+  background: #fff;
+  color: #ff4d4f;
+  border: 2rpx solid #ff4d4f;
+  border-radius: 8rpx;
+  padding: 24rpx;
+  font-size: 32rpx;
+}
+
+.delete-btn::after {
+  border: none;
+}
+
+.edit-btn {
+  flex: 1;
+  background: #1890ff;
+  color: #fff;
+  border: none;
+  border-radius: 8rpx;
+  padding: 24rpx;
+  font-size: 32rpx;
+}
+
+.edit-btn::after {
+  border: none;
+}
+

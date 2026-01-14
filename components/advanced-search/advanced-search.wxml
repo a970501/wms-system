@@ -1,0 +1,141 @@
+<!-- components/advanced-search/advanced-search.wxml -->
+<view class="search-overlay" wx:if="{{visible}}" bindtap="onClose">
+  <view class="search-panel" catchtap="">
+    <!-- 搜索头部 -->
+    <view class="search-header">
+      <text class="search-title">高级搜索</text>
+      <view class="search-actions">
+        <button class="reset-btn" size="mini" bindtap="onReset">重置</button>
+        <text class="close-btn" bindtap="onClose">✕</text>
+      </view>
+    </view>
+
+    <!-- 搜索表单 -->
+    <scroll-view class="search-form" scroll-y>
+      <view class="form-section">
+        <view class="section-title">搜索条件</view>
+        
+        <view class="field-group" wx:for="{{fields}}" wx:key="key">
+          <!-- 文本输入 -->
+          <view wx:if="{{item.type === 'input'}}" class="form-field">
+            <text class="field-label">{{item.label}}</text>
+            <input
+              class="field-input"
+              type="text"
+              placeholder="{{item.placeholder || '请输入' + item.label}}"
+              value="{{searchForm[item.key] || ''}}"
+              data-field="{{item.key}}"
+              bindinput="onFieldInput"
+            />
+          </view>
+
+          <!-- 选择器 -->
+          <view wx:elif="{{item.type === 'picker'}}" class="form-field">
+            <text class="field-label">{{item.label}}</text>
+            <picker
+              range="{{item.options}}"
+              value="{{searchForm[item.key + '_index'] || 0}}"
+              data-field="{{item.key}}"
+              bindchange="onPickerChange"
+            >
+              <view class="picker-display">
+                <text class="picker-text {{!searchForm[item.key] ? 'placeholder' : ''}}">
+                  {{searchForm[item.key] || item.placeholder || '请选择' + item.label}}
+                </text>
+                <text class="picker-arrow">▼</text>
+              </view>
+            </picker>
+          </view>
+
+          <!-- 日期选择 -->
+          <view wx:elif="{{item.type === 'date'}}" class="form-field">
+            <text class="field-label">{{item.label}}</text>
+            <picker
+              mode="date"
+              value="{{searchForm[item.key] || ''}}"
+              data-field="{{item.key}}"
+              bindchange="onDateChange"
+            >
+              <view class="picker-display">
+                <text class="picker-text {{!searchForm[item.key] ? 'placeholder' : ''}}">
+                  {{searchForm[item.key] || item.placeholder || '请选择日期'}}
+                </text>
+                <text class="picker-arrow">📅</text>
+              </view>
+            </picker>
+          </view>
+
+          <!-- 数字输入 -->
+          <view wx:elif="{{item.type === 'number'}}" class="form-field">
+            <text class="field-label">{{item.label}}</text>
+            <input
+              class="field-input"
+              type="digit"
+              placeholder="{{item.placeholder || '请输入数字'}}"
+              value="{{searchForm[item.key] || ''}}"
+              data-field="{{item.key}}"
+              bindinput="onFieldInput"
+            />
+          </view>
+        </view>
+      </view>
+
+      <!-- 搜索历史 -->
+      <view class="history-section" wx:if="{{searchHistory.length > 0}}">
+        <view class="section-header">
+          <text class="section-title">搜索历史</text>
+          <view class="section-actions">
+            <text class="toggle-btn" bindtap="toggleHistory">
+              {{showHistory ? '收起' : '展开'}}
+            </text>
+            <text class="clear-btn" bindtap="clearHistory">清空</text>
+          </view>
+        </view>
+        
+        <view class="history-list" wx:if="{{showHistory}}">
+          <view 
+            class="history-item" 
+            wx:for="{{searchHistory}}" 
+            wx:key="timestamp"
+            data-index="{{index}}"
+            bindtap="useHistorySearch"
+          >
+            <text class="history-text">{{item.text}}</text>
+            <text 
+              class="history-delete" 
+              data-index="{{index}}"
+              catchtap="deleteHistory"
+            >×</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 热门搜索 -->
+      <view class="hot-section" wx:if="{{hotSearches.length > 0}}">
+        <view class="section-title">热门搜索</view>
+        <view class="hot-tags">
+          <text 
+            class="hot-tag" 
+            wx:for="{{hotSearches}}" 
+            wx:key="text"
+            data-text="{{item.text}}"
+            data-type="{{item.type}}"
+            bindtap="useHotSearch"
+          >
+            {{item.text}}
+          </text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 搜索按钮 -->
+    <view class="search-footer">
+      <button class="search-btn" type="primary" bindtap="onSearch">
+        开始搜索
+      </button>
+      <button class="voice-btn" size="mini" bindtap="onQuickSearch">
+        🎤 语音
+      </button>
+    </view>
+  </view>
+</view>

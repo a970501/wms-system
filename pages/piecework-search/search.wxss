@@ -1,0 +1,258 @@
+/* pages/piecework-search/search.wxss */
+.container { padding: 20rpx; background: #f5f5f5; min-height: 100vh; }
+
+.filter-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.filter-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #303133;
+  margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #ebeef5;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.filter-label {
+  width: 160rpx;
+  font-size: 28rpx;
+  color: #606266;
+}
+
+.filter-picker {
+  flex: 1;
+  height: 64rpx;
+  line-height: 64rpx;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  color: #303133;
+}
+
+.date-range {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.date-picker {
+  flex: 1;
+  height: 64rpx;
+  line-height: 64rpx;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 0 16rpx;
+  font-size: 26rpx;
+  text-align: center;
+}
+
+.date-sep {
+  margin: 0 16rpx;
+  color: #909399;
+}
+
+.quick-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  padding: 20rpx 0;
+}
+
+.quick-btn {
+  padding: 12rpx 24rpx;
+  background: #f5f5f5;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+  color: #606266;
+}
+
+.quick-btn.active {
+  background: #409EFF;
+  color: #fff;
+}
+
+.filter-btns {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.reset-btn, .search-btn {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  border-radius: 8rpx;
+  font-size: 30rpx;
+}
+
+.reset-btn {
+  background: #f5f5f5;
+  color: #606266;
+}
+
+.search-btn {
+  background: #409EFF;
+  color: #fff;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.summary-left {
+  display: flex;
+  flex: 1;
+}
+
+.summary-item {
+  flex: 1;
+  text-align: center;
+}
+
+.summary-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #303133;
+  display: block;
+}
+
+.summary-value.text-success { color: #67C23A; }
+
+.summary-label {
+  font-size: 24rpx;
+  color: #909399;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.export-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #409EFF;
+  color: #fff;
+  border-radius: 12rpx;
+  padding: 16rpx 24rpx;
+  min-width: 120rpx;
+  font-size: 26rpx;
+  transition: all 0.3s ease;
+}
+
+.export-btn:active {
+  background: #337ecc;
+  transform: scale(0.95);
+}
+
+.export-icon {
+  font-size: 32rpx;
+  margin-bottom: 4rpx;
+}
+
+.results-list { max-height: 800rpx; }
+
+.record-card {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+  position: relative;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.record-card.has-defect { border-left: 6rpx solid #F56C6C; }
+
+.defect-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #F56C6C;
+  color: #fff;
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 0 12rpx 0 12rpx;
+}
+
+.record-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.product-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #303133;
+}
+
+.semi-tag {
+  background: #E6A23C;
+  color: #fff;
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+  margin-left: 12rpx;
+}
+
+.worker-name {
+  margin-left: auto;
+  font-size: 26rpx;
+  color: #409EFF;
+}
+
+.record-specs {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.spec-tag {
+  background: #f0f2f5;
+  padding: 6rpx 16rpx;
+  border-radius: 4rpx;
+  font-size: 24rpx;
+  color: #606266;
+}
+
+.work-date {
+  margin-left: auto;
+  font-size: 24rpx;
+  color: #909399;
+}
+
+.record-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quantity { font-size: 28rpx; color: #303133; }
+.amount { font-size: 30rpx; font-weight: bold; color: #67C23A; }
+
+.empty-state {
+  text-align: center;
+  padding: 80rpx 0;
+}
+
+.empty-icon { font-size: 80rpx; display: block; margin-bottom: 20rpx; }
+.empty-text { font-size: 28rpx; color: #909399; }
+

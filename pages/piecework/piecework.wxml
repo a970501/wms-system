@@ -1,0 +1,105 @@
+<!-- pages/piecework/piecework.wxml -->
+<view class="container">
+  <!-- 搜索框 -->
+  <view class="search-section">
+    <input
+      class="search-input"
+      placeholder="搜索产品名称/规格"
+      value="{{keyword}}"
+      bindinput="onKeywordInput"
+      bindconfirm="searchRecords"
+    />
+    <view class="clear-btn" wx:if="{{keyword}}" bindtap="clearKeyword">×</view>
+  </view>
+
+  <!-- 日期筛选 -->
+  <view class="filter-section">
+    <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+      <view class="date-picker">
+        <text>{{startDate || '开始日期'}}</text>
+      </view>
+    </picker>
+    <text class="date-separator">至</text>
+    <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+      <view class="date-picker">
+        <text>{{endDate || '结束日期'}}</text>
+      </view>
+    </picker>
+    <view class="filter-btn" bindtap="searchRecords">筛选</view>
+  </view>
+
+  <!-- 统计信息和导出按钮 -->
+  <view class="summary-card">
+    <view class="summary-left">
+      <view class="summary-item">
+        <text class="summary-label">总数量</text>
+        <text class="summary-value">{{totalQuantity}}</text>
+      </view>
+      <view class="summary-divider"></view>
+      <view class="summary-item">
+        <text class="summary-label">总金额</text>
+        <text class="summary-value text-success">¥{{totalAmount}}</text>
+      </view>
+    </view>
+    <view class="export-btn" bindtap="exportRecords" wx:if="{{records.length > 0}}">
+      <text class="export-icon">📊</text>
+      <text>导出</text>
+    </view>
+  </view>
+
+  <!-- 记录列表 -->
+  <view class="records-section">
+    <view class="section-header">
+      <text class="section-title">计件记录</text>
+      <text class="record-count">共 {{records.length}} 条</text>
+    </view>
+
+    <scroll-view
+      scroll-y
+      class="records-list"
+      bindscrolltolower="loadMore"
+      wx:if="{{records.length > 0}}"
+    >
+      <view class="record-card {{item.defectQuantity > 0 ? 'has-defect' : ''}}" wx:for="{{records}}" wx:key="id" bindtap="goToDetail" data-record="{{item}}">
+        <!-- 报废角标 -->
+        <view class="defect-badge" wx:if="{{item.defectQuantity > 0}}">报废{{item.defectQuantity}}</view>
+
+        <view class="record-header">
+          <view class="product-row">
+            <text class="product-name">{{item.productName}}</text>
+            <text class="semi-tag" wx:if="{{item.semiFinished === '是'}}">半成品</text>
+          </view>
+          <text class="work-date">{{item.workDate ? item.workDate.substring(0, 10) : ''}}</text>
+        </view>
+
+        <view class="record-specs">
+          <text class="tag spec-tag" wx:if="{{item.specification}}">{{item.specification}}</text>
+          <text class="tag material-tag" wx:if="{{item.material}}">{{item.material}}</text>
+        </view>
+
+        <view class="record-footer">
+          <view class="footer-left">
+            <text class="quantity-label">数量</text>
+            <text class="quantity-value">{{item.quantity}}</text>
+            <text class="quantity-unit">{{item.unit && item.unit !== 'null' ? item.unit : '个'}}</text>
+          </view>
+          <view class="footer-right">
+            <text class="price-text">¥{{item.unitPrice || 0}}/个</text>
+            <text class="amount-text">¥{{item.totalAmount || '0.00'}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="empty-state" wx:else>
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">暂无计件记录</text>
+    </view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="add-btn" bindtap="addRecord">
+    <text>+</text>
+  </view>
+</view>
+

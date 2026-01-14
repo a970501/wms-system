@@ -1,0 +1,71 @@
+<!-- pages/inventory-add/add.wxml -->
+<view class="container">
+  <view class="form-section">
+    <view class="section-title">{{isEdit ? '编辑库存' : (type === 'parts' ? '新增零件' : '添加毛坯')}}</view>
+
+    <!-- 产品名称（下拉选择） -->
+    <view class="form-item row">
+      <text class="label"><text class="required">*</text> 产品名称</text>
+      <picker bindchange="onProductNameChange" value="{{productNameIndex}}" range="{{productNames}}">
+        <view class="picker {{formData.productName ? '' : 'placeholder'}}">
+          {{formData.productName || '请选择产品名称'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 规格（下拉选择） -->
+    <view class="form-item row">
+      <text class="label"><text class="required">*</text> 规格</text>
+      <picker bindchange="onSpecChange" value="{{specIndex}}" range="{{specOptions}}">
+        <view class="picker">{{formData.specification || '请选择规格'}}</view>
+      </picker>
+    </view>
+
+    <!-- 数量（带+/-按钮） -->
+    <view class="form-item row">
+      <text class="label"><text class="required">*</text> 数量</text>
+      <view class="qty-control">
+        <view class="qty-btn {{formData.quantity <= 0 ? 'disabled' : ''}}" bindtap="decreaseQty">−</view>
+        <input class="qty-input" type="number" value="{{formData.quantity}}" bindinput="onQuantityInput" />
+        <view class="qty-btn" bindtap="increaseQty">+</view>
+      </view>
+    </view>
+
+    <!-- 材质（下拉选择） -->
+    <view class="form-item row">
+      <text class="label">材质</text>
+      <picker bindchange="onMaterialChange" value="{{materialIndex}}" range="{{materials}}">
+        <view class="picker">{{formData.material || '选择材质'}}</view>
+      </picker>
+    </view>
+
+    <!-- 零件库存：连接类型 -->
+    <view class="form-item row" wx:if="{{type === 'parts'}}">
+      <text class="label">连接类型</text>
+      <picker bindchange="onConnectionTypeChange" value="{{connectionTypeIndex}}" range="{{connectionTypeLabels}}">
+        <view class="picker">{{formData.connectionType || '无'}}</view>
+      </picker>
+    </view>
+
+    <!-- 单位 -->
+    <view class="form-item row">
+      <text class="label">单位</text>
+      <input class="input short" placeholder="如：个" value="{{formData.unit}}" bindinput="onUnitInput" />
+    </view>
+
+    <!-- 备注 -->
+    <view class="form-item">
+      <text class="label">备注</text>
+      <textarea class="textarea" placeholder="备注信息" value="{{formData.remarks}}" bindinput="onRemarksInput"></textarea>
+    </view>
+  </view>
+
+  <!-- 按钮组 -->
+  <view class="btn-group">
+    <button class="cancel-btn" bindtap="goBack">取消</button>
+    <button class="submit-btn" bindtap="submitForm" disabled="{{submitting}}">
+      {{submitting ? '保存中...' : (isEdit ? '保存修改' : '保存')}}
+    </button>
+  </view>
+</view>
+

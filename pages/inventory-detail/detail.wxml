@@ -1,0 +1,176 @@
+<!-- pages/inventory-detail/detail.wxml -->
+<view class="container">
+  <view class="detail-card" wx:if="{{item}}">
+    <!-- 头部：产品名称和数量 -->
+    <view class="header {{type}}">
+      <view class="title-row">
+        <text class="product-name">{{item.productName}}</text>
+        <text class="type-tag">{{typeNames[type]}}</text>
+      </view>
+      <view class="quantity-row">
+        <text class="quantity-value {{item.quantity < 0 ? 'negative' : ''}}">{{item.quantity}}</text>
+        <text class="quantity-unit">{{item.unit || '个'}}</text>
+      </view>
+      <!-- 快捷操作按钮 -->
+      <view class="quick-actions">
+        <view class="quick-btn add" bindtap="quickAdjust" data-type="add">
+          <text class="quick-icon">+</text>
+          <text>入库</text>
+        </view>
+        <view class="quick-btn reduce" bindtap="quickAdjust" data-type="reduce">
+          <text class="quick-icon">-</text>
+          <text>出库</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="section">
+      <view class="section-title">基本信息</view>
+      <view class="info-row">
+        <text class="label">规格：</text>
+        <text class="value">{{item.specification || '-'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">材质：</text>
+        <text class="value">{{item.material || '-'}}</text>
+      </view>
+      <view class="info-row" wx:if="{{item.connectionType}}">
+        <text class="label">连接类型：</text>
+        <text class="value">{{item.connectionType}}</text>
+      </view>
+    </view>
+
+    <!-- 库存信息 -->
+    <view class="section">
+      <view class="section-title">库存信息</view>
+      <view class="info-row">
+        <text class="label">当前数量：</text>
+        <text class="value highlight {{item.quantity < 0 ? 'negative' : ''}}">{{item.quantity}} {{item.unit || '个'}}</text>
+      </view>
+      <view class="info-row" wx:if="{{item.minStock !== undefined && item.minStock !== null}}">
+        <text class="label">最低库存：</text>
+        <text class="value">{{item.minStock}}</text>
+      </view>
+      <view class="info-row" wx:if="{{item.maxStock !== undefined && item.maxStock !== null}}">
+        <text class="label">最高库存：</text>
+        <text class="value">{{item.maxStock}}</text>
+      </view>
+      <view class="info-row" wx:if="{{item.location}}">
+        <text class="label">存放位置：</text>
+        <text class="value">{{item.location}}</text>
+      </view>
+    </view>
+
+    <!-- 历史增减记录 -->
+    <view class="section">
+      <view class="section-title">📈 历史增减记录</view>
+      <view class="history-list" wx:if="{{history && history.length > 0}}">
+        <view class="history-item" wx:for="{{history}}" wx:key="id">
+          <view class="history-header">
+            <text class="history-type {{item.quantity_change > 0 ? 'increase' : 'decrease'}}">
+              {{item.quantity_change > 0 ? '+' : ''}}{{item.quantity_change}}
+            </text>
+            <text class="history-date">{{item.created_at}}</text>
+          </view>
+          
+          <!-- 产品信息标签 -->
+          <view class="history-tags">
+            <text class="tag spec-tag" wx:if="{{item.specification}}">{{item.specification}}</text>
+            <text class="tag material-tag" wx:if="{{item.material}}">{{item.material}}</text>
+            <text class="tag connection-tag" wx:if="{{item.connection_type}}">{{item.connection_type}}</text>
+          </view>
+          
+          <view class="history-body">
+            <text class="history-detail">类型: {{item.inventory_type === 'parts' ? '零件入库' : item.inventory_type === 'blank' ? '毛坯消耗' : '成品'}}</text>
+            <text class="history-detail" wx:if="{{item.worker_name}}">工人: {{item.worker_name}}</text>
+          </view>
+          <view class="history-footer" wx:if="{{item.original_quantity !== undefined}}">
+            <text class="history-balance">变动前: {{item.original_quantity}} → 变动后: {{item.original_quantity + item.quantity_change}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="empty-history" wx:else>
+        <text class="empty-text">暂无历史记录</text>
+      </view>
+    </view>
+
+    <!-- 供应商信息（如有） -->
+    <view class="section" wx:if="{{item.supplier || item.supplierName}}">
+      <view class="section-title">供应商信息</view>
+      <view class="info-row">
+        <text class="label">供应商：</text>
+        <text class="value">{{item.supplier || item.supplierName}}</text>
+      </view>
+      <view class="info-row" wx:if="{{item.supplierContact}}">
+        <text class="label">联系方式：</text>
+        <text class="value">{{item.supplierContact}}</text>
+      </view>
+    </view>
+
+    <!-- 时间信息 -->
+    <view class="section">
+      <view class="section-title">其他信息</view>
+      <view class="info-row" wx:if="{{item.createdTime}}">
+        <text class="label">创建时间：</text>
+        <text class="value">{{item.createdTime}}</text>
+      </view>
+      <view class="info-row" wx:if="{{item.updatedTime}}">
+        <text class="label">更新时间：</text>
+        <text class="value">{{item.updatedTime}}</text>
+      </view>
+      <view class="info-row" wx:if="{{item.lastInTime}}">
+        <text class="label">最后入库：</text>
+        <text class="value">{{item.lastInTime}}</text>
+      </view>
+      <view class="info-row" wx:if="{{item.lastOutTime}}">
+        <text class="label">最后出库：</text>
+        <text class="value">{{item.lastOutTime}}</text>
+      </view>
+      <view class="info-row" wx:if="{{item.remarks}}">
+        <text class="label">备注：</text>
+        <text class="value">{{item.remarks}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <text>加载中...</text>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="action-bar" wx:if="{{item && type !== 'finished'}}">
+    <view class="action-btn edit-btn" bindtap="editItem">
+      <text class="btn-icon">✏️</text>
+      <text>修改</text>
+    </view>
+    <view class="action-btn delete-btn" bindtap="deleteItem">
+      <text class="btn-icon">🗑️</text>
+      <text>删除</text>
+    </view>
+  </view>
+
+  <!-- 数量调整弹窗 -->
+  <view class="modal-mask" wx:if="{{showAdjustModal}}" bindtap="closeModal"></view>
+  <view class="modal-content" wx:if="{{showAdjustModal}}">
+    <view class="modal-header">
+      <text class="modal-title">{{adjustType === 'add' ? '入库' : '出库'}}</text>
+      <text class="modal-close" bindtap="closeModal">×</text>
+    </view>
+    <view class="modal-body">
+      <view class="input-group">
+        <text class="input-label">{{adjustType === 'add' ? '入库' : '出库'}}数量</text>
+        <input class="input-field" type="number" placeholder="请输入数量" value="{{adjustQuantity}}" bindinput="onAdjustInput"/>
+      </view>
+      <view class="input-group">
+        <text class="input-label">备注（可选）</text>
+        <input class="input-field" placeholder="请输入备注" value="{{adjustRemark}}" bindinput="onRemarkInput"/>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <view class="modal-btn cancel" bindtap="closeModal">取消</view>
+      <view class="modal-btn confirm" bindtap="confirmAdjust">确定</view>
+    </view>
+  </view>
+</view>
+

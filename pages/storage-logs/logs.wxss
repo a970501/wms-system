@@ -1,0 +1,160 @@
+/* pages/storage-logs/logs.wxss */
+.container {
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding: 20rpx;
+}
+
+.stats-section {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.stat-card {
+  flex: 1;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  text-align: center;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.stat-value {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #1890ff;
+  margin-bottom: 8rpx;
+}
+
+.stat-value.success {
+  color: #52c41a;
+}
+
+.stat-value.warning {
+  color: #fa8c16;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.logs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.log-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.log-date {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.log-badge {
+  background: #fff3e0;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.badge-text {
+  font-size: 24rpx;
+  color: #fa8c16;
+}
+
+.log-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.log-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.log-stat .stat-num {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #1890ff;
+  margin-bottom: 4rpx;
+}
+
+.log-stat.success .stat-num {
+  color: #52c41a;
+}
+
+.log-stat.worker .stat-num {
+  color: #666;
+}
+
+.log-stat .stat-text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.arrow {
+  font-size: 32rpx;
+  color: #ddd;
+  margin: 0 10rpx;
+}
+
+.log-summary {
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.summary-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.load-more {
+  padding: 40rpx 0;
+  text-align: center;
+}
+
+.load-btn {
+  background: #fff;
+  color: #1890ff;
+  border: 1rpx solid #1890ff;
+  border-radius: 8rpx;
+  padding: 20rpx 60rpx;
+  font-size: 28rpx;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 0;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}

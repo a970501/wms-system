@@ -1,0 +1,517 @@
+<!-- pages/notification-settings/settings.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="title">通知设置</text>
+    <text class="subtitle">配置系统通知和日志报告推送</text>
+  </view>
+
+  <!-- 标签页导航 -->
+  <view class="tab-nav">
+    <view class="tab-item {{currentTab === 'email' ? 'active' : ''}}" bindtap="switchTab" data-tab="email">
+      <text class="tab-text">邮件通知</text>
+    </view>
+    <view class="tab-item {{currentTab === 'wechat' ? 'active' : ''}}" bindtap="switchTab" data-tab="wechat">
+      <text class="tab-text">微信通知</text>
+    </view>
+    <view class="tab-item {{currentTab === 'webhook' ? 'active' : ''}}" bindtap="switchTab" data-tab="webhook">
+      <text class="tab-text">企业微信</text>
+    </view>
+    <view class="tab-item {{currentTab === 'message-types' ? 'active' : ''}}" bindtap="switchTab" data-tab="message-types">
+      <text class="tab-text">消息类型</text>
+    </view>
+  </view>
+
+  <!-- 通知状态 -->
+  <view class="section">
+    <view class="section-title">通知状态</view>
+    <view class="status-card {{notificationStatus.enabled ? 'enabled' : 'disabled'}}">
+      <text class="status-icon">{{notificationStatus.enabled ? '✅' : '❌'}}</text>
+      <text class="status-text">{{notificationStatus.enabled ? '已启用' : '未启用'}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">发送频率</text>
+      <text class="info-value">每 {{notificationStatus.intervalDays || 1}} 天</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">下次发送</text>
+      <text class="info-value">{{notificationStatus.nextSchedule || '21:40'}}</text>
+    </view>
+  </view>
+
+  <!-- 邮件通知配置 -->
+  <view class="tab-content" wx:if="{{currentTab === 'email'}}">
+    <view class="section">
+      <view class="section-title">邮件通知配置</view>
+      <view class="config-status">
+        <text class="config-icon">{{notificationStatus.emailConfigured ? '✅' : '⚠️'}}</text>
+        <text class="config-text">{{notificationStatus.emailConfigured ? '已配置' : '未配置'}}</text>
+      </view>
+
+      <!-- 发件邮箱配置 -->
+      <view class="subsection">
+        <view class="subsection-title">发件邮箱设置</view>
+        <view class="form-item">
+          <text class="form-label">发件邮箱</text>
+          <input class="form-input" placeholder="sender@qq.com" value="{{emailFrom}}" bindinput="onEmailFromInput" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">SMTP服务器</text>
+          <input class="form-input" placeholder="smtp.qq.com" value="{{mailHost}}" bindinput="onMailHostInput" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">SMTP端口</text>
+          <input class="form-input" type="number" placeholder="587" value="{{mailPort}}" bindinput="onMailPortInput" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">邮箱账号</text>
+          <input class="form-input" placeholder="your_email@qq.com" value="{{mailUsername}}" bindinput="onMailUsernameInput" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">邮箱授权码</text>
+          <input class="form-input" password placeholder="SMTP授权码" value="{{mailPassword}}" bindinput="onMailPasswordInput" />
+        </view>
+      </view>
+
+      <!-- 收件邮箱列表 -->
+      <view class="subsection">
+        <view class="recipients-header">
+          <text class="recipients-title">邮件接收者 ({{emailRecipients.length}})</text>
+          <button class="btn-add-recipient" bindtap="showAddEmailRecipientDialog">添加</button>
+        </view>
+        
+        <view class="recipients-list" wx:if="{{emailRecipients.length > 0}}">
+          <view class="recipient-item" wx:for="{{emailRecipients}}" wx:key="email">
+            <view class="recipient-info">
+              <text class="recipient-name">{{item.name}}</text>
+              <text class="recipient-email">{{item.email}}</text>
+              <text class="recipient-role">{{item.role === 'admin' ? '管理员' : '普通用户'}}</text>
+              <view class="recipient-message-types">
+                <text class="message-types-label">接收消息：</text>
+                <view class="message-types-tags">
+                  <text class="message-type-tag" wx:if="{{item.messageTypes.system_alert}}">系统告警</text>
+                  <text class="message-type-tag" wx:if="{{item.messageTypes.daily_report}}">日志报告</text>
+                  <text class="message-type-tag" wx:if="{{item.messageTypes.inventory_alert}}">库存提醒</text>
+                  <text class="message-type-tag" wx:if="{{item.messageTypes.piecework_report}}">计件统计</text>
+                  <text class="message-type-tag" wx:if="{{item.messageTypes.user_operation}}">用户操作</text>
+                </view>
+              </view>
+            </view>
+            <view class="recipient-actions">
+              <button class="btn-settings" bindtap="showEmailRecipientSettings" data-email="{{item.email}}">设置</button>
+              <button class="btn-remove" bindtap="removeEmailRecipient" data-email="{{item.email}}" data-name="{{item.name}}">删除</button>
+            </view>
+          </view>
+        </view>
+        
+        <view class="empty-recipients" wx:if="{{emailRecipients.length === 0}}">
+          <text class="empty-text">暂无邮件接收者，请添加</text>
+        </view>
+      </view>
+      
+      <view class="actions">
+        <button class="btn-test" bindtap="sendTestReport" loading="{{testing}}">发送测试邮件</button>
+        <button class="btn-piecework" bindtap="sendPieceworkReport" loading="{{sendingPiecework}}">发送月度统计</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 微信通知配置 -->
+  <view class="tab-content" wx:if="{{currentTab === 'wechat'}}">
+    <view class="section">
+      <view class="section-title">微信通知配置</view>
+      
+      <!-- 启用开关 -->
+      <view class="form-item">
+        <text class="form-label">启用微信通知</text>
+        <switch checked="{{wechatNotificationEnabled}}" bindchange="toggleWechatNotification" />
+      </view>
+
+      <!-- 接收者列表 -->
+      <view class="recipients-section">
+        <view class="recipients-header">
+          <text class="recipients-title">通知接收者 ({{wechatRecipients.length}})</text>
+          <button class="btn-add-recipient" bindtap="showAddRecipientDialog">添加</button>
+        </view>
+        
+        <view class="recipients-list" wx:if="{{wechatRecipients.length > 0}}">
+          <view class="recipient-item" wx:for="{{wechatRecipients}}" wx:key="openid">
+            <view class="recipient-info">
+              <text class="recipient-name">{{item.name}}</text>
+              <text class="recipient-role">{{item.role === 'admin' ? '管理员' : '普通用户'}}</text>
+            </view>
+            <view class="recipient-actions">
+              <button class="btn-remove" bindtap="removeRecipient" data-openid="{{item.openid}}" data-name="{{item.name}}">删除</button>
+            </view>
+          </view>
+        </view>
+        
+        <view class="empty-recipients" wx:if="{{wechatRecipients.length === 0}}">
+          <text class="empty-text">暂无接收者，请添加</text>
+        </view>
+      </view>
+
+      <view class="actions">
+        <button class="btn-test" bindtap="testWechatNotification" loading="{{testing}}">发送测试消息</button>
+        <button class="btn-piecework" bindtap="sendDailyReportToWechat" loading="{{sendingPiecework}}">发送每日报告</button>
+      </view>
+
+      <!-- 使用说明 -->
+      <view class="tip-section">
+        <view class="tip">
+          <text class="tip-text">💡 如何获取OpenID：</text>
+        </view>
+        <view class="tip">
+          <text class="tip-text">1. 用户需要先关注公众号或使用小程序</text>
+        </view>
+        <view class="tip">
+          <text class="tip-text">2. 在开发者工具中查看用户信息获取OpenID</text>
+        </view>
+        <view class="tip">
+          <text class="tip-text">3. 或通过后端API接口获取用户OpenID</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 企业微信配置 -->
+  <view class="tab-content" wx:if="{{currentTab === 'webhook'}}">
+    <view class="section">
+      <view class="section-title">企业微信机器人</view>
+      <view class="config-status">
+        <text class="config-icon">{{notificationStatus.wechatConfigured ? '✅' : '⚠️'}}</text>
+        <text class="config-text">{{notificationStatus.wechatConfigured ? '已配置' : '未配置'}}</text>
+      </view>
+      <view class="form-item">
+        <text class="form-label">Webhook URL</text>
+        <textarea class="form-textarea" placeholder="https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx" value="{{wechatWebhook}}" bindinput="onWechatWebhookInput"></textarea>
+      </view>
+      <view class="tip">
+      <text class="tip-text">💡 在企业微信群 → 右上角 → 添加群机器人 获取Webhook地址</text>
+    </view>
+  </view>
+
+  <!-- 企业微信应用消息配置 -->
+  <view class="section">
+    <view class="section-title">企业微信应用消息</view>
+    <view class="config-status">
+      <text class="config-icon">{{notificationStatus.wechatWorkConfigured ? '✅' : '⚠️'}}</text>
+      <text class="config-text">{{notificationStatus.wechatWorkConfigured ? '已配置' : '未配置'}}</text>
+    </view>
+    <view class="form-item">
+      <text class="form-label">企业ID (CorpId)</text>
+      <input class="form-input" placeholder="wwxxxxxxxxxxxxxx" value="{{wechatWorkCorpId}}" bindinput="onWechatWorkCorpIdInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">应用ID (AgentId)</text>
+      <input class="form-input" type="number" placeholder="1000001" value="{{wechatWorkAgentId}}" bindinput="onWechatWorkAgentIdInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">应用密钥 (Secret)</text>
+      <input class="form-input" password placeholder="应用Secret" value="{{wechatWorkSecret}}" bindinput="onWechatWorkSecretInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">接收人用户ID</text>
+      <input class="form-input" placeholder="ZhangSan|LiSi" value="{{wechatWorkUserId}}" bindinput="onWechatWorkUserIdInput" />
+    </view>
+    <view class="tip">
+      <text class="tip-text">💡 在企业微信管理后台 → 应用管理 → 自建应用 获取配置信息</text>
+    </view>
+    <button class="btn-test-small" bindtap="testWeChatWork" loading="{{testingWeChatWork}}">测试发送</button>
+  </view>
+
+  <!-- 微信公众号模板消息配置 -->
+  <view class="section">
+    <view class="section-title">微信公众号模板消息</view>
+    <view class="config-status">
+      <text class="config-icon">{{notificationStatus.wechatOfficialConfigured ? '✅' : '⚠️'}}</text>
+      <text class="config-text">{{notificationStatus.wechatOfficialConfigured ? '已配置' : '未配置'}}</text>
+    </view>
+    <view class="form-item">
+      <text class="form-label">AppID</text>
+      <input class="form-input" placeholder="wx1234567890abcdef" value="{{wechatOfficialAppId}}" bindinput="onWechatOfficialAppIdInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">AppSecret</text>
+      <input class="form-input" password placeholder="应用密钥" value="{{wechatOfficialAppSecret}}" bindinput="onWechatOfficialAppSecretInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">模板ID</text>
+      <input class="form-input" placeholder="模板ID" value="{{wechatOfficialTemplateId}}" bindinput="onWechatOfficialTemplateIdInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">接收人OpenID</text>
+      <input class="form-input" placeholder="用户OpenID" value="{{wechatOfficialOpenId}}" bindinput="onWechatOfficialOpenIdInput" />
+    </view>
+    <view class="tip">
+      <text class="tip-text">💡 在微信公众平台 → 开发 → 基本配置 获取AppID和AppSecret</text>
+    </view>
+    <button class="btn-test-small" bindtap="testWeChatOfficial" loading="{{testingWeChatOfficial}}">测试发送</button>
+  </view>
+
+  <!-- 微信小程序订阅消息配置 -->
+  <view class="section">
+    <view class="section-title">微信小程序订阅消息</view>
+    <view class="config-status">
+      <text class="config-icon">{{notificationStatus.wechatMiniConfigured ? '✅' : '⚠️'}}</text>
+      <text class="config-text">{{notificationStatus.wechatMiniConfigured ? '已配置' : '未配置'}}</text>
+    </view>
+    <view class="form-item">
+      <text class="form-label">AppID</text>
+      <input class="form-input" placeholder="wx1234567890abcdef" value="{{wechatMiniAppId}}" bindinput="onWechatMiniAppIdInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">AppSecret</text>
+      <input class="form-input" password placeholder="应用密钥" value="{{wechatMiniAppSecret}}" bindinput="onWechatMiniAppSecretInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">模板ID</text>
+      <input class="form-input" placeholder="模板ID" value="{{wechatMiniTemplateId}}" bindinput="onWechatMiniTemplateIdInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">接收人OpenID</text>
+      <input class="form-input" placeholder="用户OpenID" value="{{wechatMiniOpenId}}" bindinput="onWechatMiniOpenIdInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">跳转页面</text>
+      <input class="form-input" placeholder="pages/index/index" value="{{wechatMiniPage}}" bindinput="onWechatMiniPageInput" />
+    </view>
+    <view class="tip">
+      <text class="tip-text">💡 在微信小程序后台 → 开发 → 开发管理 → 开发设置 获取AppID和AppSecret</text>
+    </view>
+    <button class="btn-test-small" bindtap="testWeChatMini" loading="{{testingWeChatMini}}">测试发送</button>
+    </view>
+
+    <!-- 保存按钮 -->
+    <view class="save-section">
+      <button class="btn-save" bindtap="saveConfig" loading="{{saving}}">保存配置</button>
+    </view>
+  </view>
+
+  <!-- 消息类型设置 -->
+  <view class="tab-content" wx:if="{{currentTab === 'message-types'}}">
+    <view class="section">
+      <view class="section-title">消息类型设置</view>
+      <view class="config-status">
+        <text class="config-icon">📋</text>
+        <text class="config-text">选择您希望接收的消息类型</text>
+      </view>
+
+      <!-- 邮件消息类型设置 -->
+      <view class="subsection">
+        <view class="subsection-title">邮件通知消息类型</view>
+        <view class="message-types-grid">
+          <view class="message-type-item" wx:for="{{messageTypes}}" wx:key="type" bindtap="toggleEmailMessageType" data-type="{{item.type}}">
+            <view class="message-type-checkbox {{emailMessageTypes[item.type] ? 'checked' : ''}}">
+              <text class="checkbox-icon">{{emailMessageTypes[item.type] ? '✓' : ''}}</text>
+            </view>
+            <view class="message-type-info">
+              <text class="message-type-name">{{item.name}}</text>
+              <text class="message-type-desc">{{item.description}}</text>
+            </view>
+          </view>
+        </view>
+        
+        <view class="message-type-actions">
+          <button class="btn-select-all" bindtap="selectAllEmailTypes">全选</button>
+          <button class="btn-clear-all" bindtap="clearAllEmailTypes">清空</button>
+        </view>
+      </view>
+
+      <!-- 微信消息类型设置 -->
+      <view class="subsection">
+        <view class="subsection-title">微信通知消息类型</view>
+        <view class="message-types-grid">
+          <view class="message-type-item" wx:for="{{messageTypes}}" wx:key="type" bindtap="toggleWechatMessageType" data-type="{{item.type}}">
+            <view class="message-type-checkbox {{wechatMessageTypes[item.type] ? 'checked' : ''}}">
+              <text class="checkbox-icon">{{wechatMessageTypes[item.type] ? '✓' : ''}}</text>
+            </view>
+            <view class="message-type-info">
+              <text class="message-type-name">{{item.name}}</text>
+              <text class="message-type-desc">{{item.description}}</text>
+            </view>
+          </view>
+        </view>
+        
+        <view class="message-type-actions">
+          <button class="btn-select-all" bindtap="selectAllWechatTypes">全选</button>
+          <button class="btn-clear-all" bindtap="clearAllWechatTypes">清空</button>
+        </view>
+      </view>
+
+      <!-- 消息类型说明 -->
+      <view class="tip-section">
+        <view class="tip">
+          <text class="tip-text">💡 消息类型说明：</text>
+        </view>
+        <view class="tip">
+          <text class="tip-text">• 系统告警：系统错误、异常等重要信息</text>
+        </view>
+        <view class="tip">
+          <text class="tip-text">• 日志报告：每日系统运行状态报告</text>
+        </view>
+        <view class="tip">
+          <text class="tip-text">• 库存提醒：库存不足、异常变动等提醒</text>
+        </view>
+        <view class="tip">
+          <text class="tip-text">• 计件统计：月度计件工作统计报告</text>
+        </view>
+        <view class="tip">
+          <text class="tip-text">• 用户操作：重要用户操作记录通知</text>
+        </view>
+      </view>
+
+      <!-- 保存按钮 -->
+      <view class="save-section">
+        <button class="btn-save" bindtap="saveMessageTypes" loading="{{savingMessageTypes}}">保存消息类型设置</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加微信接收者对话框 -->
+  <view class="dialog-overlay" wx:if="{{showAddRecipientDialog}}" bindtap="hideAddRecipientDialog">
+    <view class="dialog" catchtap="stopPropagation">
+      <view class="dialog-header">
+        <text class="dialog-title">添加通知接收者</text>
+        <text class="dialog-close" bindtap="hideAddRecipientDialog">×</text>
+      </view>
+      
+      <view class="dialog-content">
+        <view class="form-item">
+          <text class="label">OpenID</text>
+          <input 
+            class="input" 
+            placeholder="用户的OpenID" 
+            value="{{newRecipient.openid}}"
+            data-field="openid"
+            bindinput="onRecipientInput"
+            confirm-type="next"
+          />
+        </view>
+        
+        <view class="form-item">
+          <text class="label">姓名</text>
+          <input 
+            class="input" 
+            placeholder="接收者姓名" 
+            value="{{newRecipient.name}}"
+            data-field="name"
+            bindinput="onRecipientInput"
+            confirm-type="done"
+          />
+        </view>
+        
+        <view class="form-item">
+          <text class="label">角色</text>
+          <picker mode="selector" range="['普通用户', '管理员']" value="{{newRecipient.role === 'admin' ? 1 : 0}}" bindchange="onRecipientRoleChange">
+            <view class="picker">{{newRecipient.role === 'admin' ? '管理员' : '普通用户'}}</view>
+          </picker>
+        </view>
+      </view>
+      
+      <view class="dialog-actions">
+        <button class="dialog-btn cancel-btn" bindtap="hideAddRecipientDialog">取消</button>
+        <button class="dialog-btn confirm-btn" bindtap="addRecipient">添加</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加邮件接收者对话框 -->
+  <view class="dialog-overlay" wx:if="{{showAddEmailRecipientDialog}}" bindtap="hideAddEmailRecipientDialog">
+    <view class="dialog" catchtap="stopPropagation">
+      <view class="dialog-header">
+        <text class="dialog-title">添加邮件接收者</text>
+        <text class="dialog-close" bindtap="hideAddEmailRecipientDialog">×</text>
+      </view>
+      
+      <view class="dialog-content">
+        <view class="form-item">
+          <text class="label">邮箱地址</text>
+          <input 
+            class="input" 
+            placeholder="user@example.com" 
+            value="{{newEmailRecipient.email}}"
+            data-field="email"
+            bindinput="onEmailRecipientInput"
+            confirm-type="next"
+          />
+        </view>
+        
+        <view class="form-item">
+          <text class="label">姓名</text>
+          <input 
+            class="input" 
+            placeholder="接收者姓名" 
+            value="{{newEmailRecipient.name}}"
+            data-field="name"
+            bindinput="onEmailRecipientInput"
+            confirm-type="done"
+          />
+        </view>
+        
+        <view class="form-item">
+          <text class="label">角色</text>
+          <picker mode="selector" range="['普通用户', '管理员']" value="{{newEmailRecipient.role === 'admin' ? 1 : 0}}" bindchange="onEmailRecipientRoleChange">
+            <view class="picker">{{newEmailRecipient.role === 'admin' ? '管理员' : '普通用户'}}</view>
+          </picker>
+        </view>
+
+        <!-- 消息类型设置 -->
+        <view class="form-item">
+          <text class="label">接收消息类型</text>
+          <view class="message-types-selection">
+            <view class="message-type-item" wx:for="{{messageTypes}}" wx:key="type" bindtap="toggleNewEmailRecipientMessageType" data-type="{{item.type}}">
+              <view class="message-type-checkbox {{newEmailRecipient.messageTypes[item.type] ? 'checked' : ''}}">
+                <text class="checkbox-icon">{{newEmailRecipient.messageTypes[item.type] ? '✓' : ''}}</text>
+              </view>
+              <view class="message-type-info">
+                <text class="message-type-name">{{item.name}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="dialog-actions">
+        <button class="dialog-btn cancel-btn" bindtap="hideAddEmailRecipientDialog">取消</button>
+        <button class="dialog-btn confirm-btn" bindtap="addEmailRecipient">添加</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 邮件接收者消息类型设置对话框 -->
+  <view class="dialog-overlay" wx:if="{{showEmailRecipientSettingsDialog}}" bindtap="hideEmailRecipientSettingsDialog">
+    <view class="dialog" catchtap="stopPropagation">
+      <view class="dialog-header">
+        <text class="dialog-title">设置消息类型 - {{currentEmailRecipient.name}}</text>
+        <text class="dialog-close" bindtap="hideEmailRecipientSettingsDialog">×</text>
+      </view>
+      
+      <view class="dialog-content">
+        <view class="form-item">
+          <text class="label">选择接收的消息类型</text>
+          <view class="message-types-selection">
+            <view class="message-type-item" wx:for="{{messageTypes}}" wx:key="type" bindtap="toggleCurrentEmailRecipientMessageType" data-type="{{item.type}}">
+              <view class="message-type-checkbox {{currentEmailRecipient.messageTypes[item.type] ? 'checked' : ''}}">
+                <text class="checkbox-icon">{{currentEmailRecipient.messageTypes[item.type] ? '✓' : ''}}</text>
+              </view>
+              <view class="message-type-info">
+                <text class="message-type-name">{{item.name}}</text>
+                <text class="message-type-desc">{{item.description}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="message-type-actions">
+          <button class="btn-select-all" bindtap="selectAllCurrentEmailRecipientTypes">全选</button>
+          <button class="btn-clear-all" bindtap="clearAllCurrentEmailRecipientTypes">清空</button>
+        </view>
+      </view>
+      
+      <view class="dialog-actions">
+        <button class="dialog-btn cancel-btn" bindtap="hideEmailRecipientSettingsDialog">取消</button>
+        <button class="dialog-btn confirm-btn" bindtap="saveEmailRecipientSettings">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

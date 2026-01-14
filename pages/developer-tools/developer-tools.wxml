@@ -1,0 +1,353 @@
+<!--pages/developer-tools/developer-tools.wxml-->
+<view class="developer-tools">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="header-main">
+      <text class="page-title">🛠️ 开发者工具</text>
+      <view class="admin-badge">
+        <text class="admin-text">管理员专用</text>
+      </view>
+    </view>
+    <text class="page-subtitle">性能监控 · 调试工具 · 系统信息</text>
+  </view>
+
+  <!-- 功能标签页 -->
+  <view class="tab-bar">
+    <view class="tab-item {{currentTab === 'performance' ? 'active' : ''}}" 
+          bindtap="switchTab" data-tab="performance">
+      <text class="tab-icon">📊</text>
+      <text class="tab-text">性能监控</text>
+    </view>
+    <view class="tab-item {{currentTab === 'debug' ? 'active' : ''}}" 
+          bindtap="switchTab" data-tab="debug">
+      <text class="tab-icon">🐛</text>
+      <text class="tab-text">调试工具</text>
+    </view>
+    <view class="tab-item {{currentTab === 'system' ? 'active' : ''}}" 
+          bindtap="switchTab" data-tab="system">
+      <text class="tab-icon">⚙️</text>
+      <text class="tab-text">系统信息</text>
+    </view>
+    <view class="tab-item {{currentTab === 'logs' ? 'active' : ''}}" 
+          bindtap="switchTab" data-tab="logs">
+      <text class="tab-icon">📝</text>
+      <text class="tab-text">日志查看</text>
+    </view>
+  </view>
+
+  <!-- 性能监控 -->
+  <view wx:if="{{currentTab === 'performance'}}" class="performance-tab">
+    <!-- 性能概览 -->
+    <view class="performance-overview">
+      <view class="metric-card">
+        <text class="metric-title">页面加载时间</text>
+        <text class="metric-value">{{performanceData.pageLoadTime}}ms</text>
+        <text class="metric-status {{performanceData.pageLoadStatus}}">{{performanceData.pageLoadStatusText}}</text>
+      </view>
+      
+      <view class="metric-card">
+        <text class="metric-title">API响应时间</text>
+        <text class="metric-value">{{performanceData.apiResponseTime}}ms</text>
+        <text class="metric-status {{performanceData.apiResponseStatus}}">{{performanceData.apiResponseStatusText}}</text>
+      </view>
+      
+      <view class="metric-card">
+        <text class="metric-title">内存使用</text>
+        <text class="metric-value">{{performanceData.memoryUsage}}MB</text>
+        <text class="metric-status {{performanceData.memoryStatus}}">{{performanceData.memoryStatusText}}</text>
+      </view>
+      
+      <view class="metric-card">
+        <text class="metric-title">FPS</text>
+        <text class="metric-value">{{performanceData.fps}}</text>
+        <text class="metric-status {{performanceData.fpsStatus}}">{{performanceData.fpsStatusText}}</text>
+      </view>
+    </view>
+
+    <!-- 性能图表 -->
+    <view class="performance-charts">
+      <view class="chart-container">
+        <text class="chart-title">性能趋势</text>
+        <chart type="line" data="{{performanceChartData}}" width="100%" height="300rpx"></chart>
+      </view>
+    </view>
+
+    <!-- 性能建议 -->
+    <view wx:if="{{performanceRecommendations.length > 0}}" class="performance-recommendations">
+      <text class="section-title">🎯 性能优化建议</text>
+      <view wx:for="{{performanceRecommendations}}" wx:key="id" class="recommendation-item">
+        <view class="recommendation-header">
+          <text class="recommendation-type">{{item.type}}</text>
+          <text class="recommendation-priority {{item.priority}}">{{item.priorityText}}</text>
+        </view>
+        <text class="recommendation-message">{{item.message}}</text>
+        <text class="recommendation-action">建议操作: {{item.action}}</text>
+      </view>
+    </view>
+
+    <!-- 性能操作 -->
+    <view class="performance-actions">
+      <button class="action-btn primary" bindtap="startPerformanceMonitoring">
+        {{isMonitoring ? '停止监控' : '开始监控'}}
+      </button>
+      <button class="action-btn" bindtap="clearPerformanceData">清空数据</button>
+      <button class="action-btn" bindtap="exportPerformanceReport">导出报告</button>
+    </view>
+  </view>
+
+  <!-- 调试工具 -->
+  <view wx:if="{{currentTab === 'debug'}}" class="debug-tab">
+    <!-- 调试控制台 -->
+    <view class="debug-console">
+      <view class="console-header">
+        <text class="console-title">调试控制台</text>
+        <view class="console-controls">
+          <button class="control-btn" bindtap="clearConsole">清空</button>
+          <button class="control-btn" bindtap="toggleAutoScroll">
+            {{autoScroll ? '关闭自动滚动' : '开启自动滚动'}}
+          </button>
+        </view>
+      </view>
+      
+      <scroll-view class="console-content" scroll-y="true" scroll-top="{{consoleScrollTop}}">
+        <view wx:for="{{consoleLogs}}" wx:key="id" class="console-log {{item.level}}">
+          <text class="log-time">{{formatTime(item.timestamp)}}</text>
+          <text class="log-level">[{{item.level.toUpperCase()}}]</text>
+          <text class="log-message">{{item.message}}</text>
+          <view wx:if="{{item.data}}" class="log-data">
+            <text>{{JSON.stringify(item.data)}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 网络请求监控 -->
+    <view class="network-monitor">
+      <text class="section-title">🌐 网络请求监控</text>
+      <view wx:for="{{networkRequests}}" wx:key="id" class="request-item">
+        <view class="request-header">
+          <text class="request-method {{item.method}}">{{item.method}}</text>
+          <text class="request-url">{{item.url}}</text>
+          <text class="request-status {{item.statusClass}}">{{item.status}}</text>
+        </view>
+        <view class="request-details">
+          <text class="request-time">耗时: {{item.duration}}ms</text>
+          <text class="request-size">大小: {{item.size}}KB</text>
+          <text class="request-timestamp">{{formatTime(item.timestamp)}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 调试工具 -->
+    <view class="debug-tools">
+      <text class="section-title">🔧 调试工具</text>
+      <view class="tool-grid">
+        <view class="tool-item" bindtap="inspectElement">
+          <text class="tool-icon">🔍</text>
+          <text class="tool-name">元素检查</text>
+        </view>
+        <view class="tool-item" bindtap="measurePerformance">
+          <text class="tool-icon">⏱️</text>
+          <text class="tool-name">性能测量</text>
+        </view>
+        <view class="tool-item" bindtap="testAPI">
+          <text class="tool-icon">🌐</text>
+          <text class="tool-name">API测试</text>
+        </view>
+        <view class="tool-item" bindtap="simulateError">
+          <text class="tool-icon">⚠️</text>
+          <text class="tool-name">错误模拟</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 系统信息 -->
+  <view wx:if="{{currentTab === 'system'}}" class="system-tab">
+    <!-- 当前用户信息 -->
+    <view class="user-info-section">
+      <text class="section-title">👤 当前用户信息</text>
+      <view class="info-grid">
+        <view class="info-item">
+          <text class="info-label">用户名</text>
+          <text class="info-value">{{currentUserInfo.username}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">用户角色</text>
+          <text class="info-value">{{currentUserInfo.role === 'ADMIN' ? '管理员' : '普通用户'}}</text>
+        </view>
+        <view class="info-item copyable" bindtap="copyUserInfo" data-type="userId" data-value="{{currentUserInfo.userId}}">
+          <text class="info-label">用户ID</text>
+          <view class="info-value-container">
+            <text class="info-value">{{currentUserInfo.userId}}</text>
+            <text class="copy-icon">📋</text>
+          </view>
+        </view>
+        <view class="info-item copyable" bindtap="copyUserInfo" data-type="openId" data-value="{{currentUserInfo.openId}}">
+          <text class="info-label">OpenID</text>
+          <view class="info-value-container">
+            <text class="info-value">{{currentUserInfo.openId}}</text>
+            <text class="copy-icon">📋</text>
+          </view>
+        </view>
+        <view class="info-item copyable" bindtap="copyUserInfo" data-type="unionId" data-value="{{currentUserInfo.unionId}}">
+          <text class="info-label">UnionID</text>
+          <view class="info-value-container">
+            <text class="info-value">{{currentUserInfo.unionId}}</text>
+            <text class="copy-icon">📋</text>
+          </view>
+        </view>
+        <view class="info-item">
+          <text class="info-label">会话密钥</text>
+          <text class="info-value">{{currentUserInfo.sessionKey}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">登录时间</text>
+          <text class="info-value">{{currentUserInfo.loginTime}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">最后活跃</text>
+          <text class="info-value">{{currentUserInfo.lastActiveTime}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 设备信息 -->
+    <view class="system-info">
+      <text class="section-title">📱 设备信息</text>
+      <view class="info-grid">
+        <view class="info-item">
+          <text class="info-label">设备型号</text>
+          <text class="info-value">{{systemInfo.model}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">系统版本</text>
+          <text class="info-value">{{systemInfo.system}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">微信版本</text>
+          <text class="info-value">{{systemInfo.version}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">基础库版本</text>
+          <text class="info-value">{{systemInfo.SDKVersion}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">屏幕尺寸</text>
+          <text class="info-value">{{systemInfo.screenWidth}}x{{systemInfo.screenHeight}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">可用内存</text>
+          <text class="info-value">{{systemInfo.benchmarkLevel}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 应用信息 -->
+    <view class="app-info">
+      <text class="section-title">📦 应用信息</text>
+      <view class="info-grid">
+        <view class="info-item">
+          <text class="info-label">应用版本</text>
+          <text class="info-value">{{appInfo.version}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">构建时间</text>
+          <text class="info-value">{{appInfo.buildTime}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">运行时长</text>
+          <text class="info-value">{{appInfo.uptime}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">页面数量</text>
+          <text class="info-value">{{appInfo.pageCount}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">缓存大小</text>
+          <text class="info-value">{{appInfo.cacheSize}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">存储使用</text>
+          <text class="info-value">{{appInfo.storageUsage}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 环境变量 -->
+    <view class="env-info">
+      <text class="section-title">🌍 环境变量</text>
+      <view wx:for="{{envVariables}}" wx:key="key" class="env-item">
+        <text class="env-key">{{item.key}}</text>
+        <text class="env-value">{{item.value}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 日志查看 -->
+  <view wx:if="{{currentTab === 'logs'}}" class="logs-tab">
+    <!-- 日志过滤 -->
+    <view class="log-filters">
+      <view class="filter-group">
+        <text class="filter-label">级别:</text>
+        <view class="filter-options">
+          <view class="filter-option {{logFilter.level === 'all' ? 'active' : ''}}" 
+                bindtap="setLogFilter" data-type="level" data-value="all">全部</view>
+          <view class="filter-option {{logFilter.level === 'error' ? 'active' : ''}}" 
+                bindtap="setLogFilter" data-type="level" data-value="error">错误</view>
+          <view class="filter-option {{logFilter.level === 'warn' ? 'active' : ''}}" 
+                bindtap="setLogFilter" data-type="level" data-value="warn">警告</view>
+          <view class="filter-option {{logFilter.level === 'info' ? 'active' : ''}}" 
+                bindtap="setLogFilter" data-type="level" data-value="info">信息</view>
+          <view class="filter-option {{logFilter.level === 'debug' ? 'active' : ''}}" 
+                bindtap="setLogFilter" data-type="level" data-value="debug">调试</view>
+        </view>
+      </view>
+      
+      <view class="filter-group">
+        <text class="filter-label">时间:</text>
+        <view class="filter-options">
+          <view class="filter-option {{logFilter.time === 'all' ? 'active' : ''}}" 
+                bindtap="setLogFilter" data-type="time" data-value="all">全部</view>
+          <view class="filter-option {{logFilter.time === 'hour' ? 'active' : ''}}" 
+                bindtap="setLogFilter" data-type="time" data-value="hour">1小时</view>
+          <view class="filter-option {{logFilter.time === 'day' ? 'active' : ''}}" 
+                bindtap="setLogFilter" data-type="time" data-value="day">今天</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 日志列表 -->
+    <view class="logs-container">
+      <scroll-view class="logs-scroll" scroll-y="true">
+        <view wx:for="{{filteredLogs}}" wx:key="id" class="log-entry {{item.level}}">
+          <view class="log-header">
+            <text class="log-timestamp">{{formatFullTime(item.timestamp)}}</text>
+            <text class="log-level-badge">{{item.level.toUpperCase()}}</text>
+          </view>
+          <text class="log-content">{{item.message}}</text>
+          <view wx:if="{{item.stack}}" class="log-stack">
+            <text>{{item.stack}}</text>
+          </view>
+          <view wx:if="{{item.context}}" class="log-context">
+            <text class="context-title">上下文:</text>
+            <text class="context-data">{{JSON.stringify(item.context)}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 日志操作 -->
+    <view class="log-actions">
+      <button class="action-btn" bindtap="refreshLogs">刷新</button>
+      <button class="action-btn" bindtap="clearLogs">清空日志</button>
+      <button class="action-btn" bindtap="exportLogs">导出日志</button>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-overlay">
+    <view class="loading-spinner"></view>
+    <text>加载中...</text>
+  </view>
+</view>

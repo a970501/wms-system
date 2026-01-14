@@ -1,0 +1,54 @@
+<!-- pages/login/login.wxml -->
+<view class="login-container">
+  <view class="login-header">
+    <view class="logo-icon">📦</view>
+    <text class="title">资料存储系统</text>
+    <text class="subtitle">小马的资料存储</text>
+  </view>
+
+  <view class="login-form">
+    <view class="input-group">
+      <view class="input-icon">
+        <text class="iconfont">👤</text>
+      </view>
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="请输入用户名" 
+        value="{{username}}" 
+        bindinput="onUsernameInput"
+      />
+    </view>
+
+    <view class="input-group">
+      <view class="input-icon">
+        <text class="iconfont">🔒</text>
+      </view>
+      <input 
+        class="input" 
+        type="text" 
+        password="{{!showPassword}}"
+        placeholder="请输入密码" 
+        value="{{password}}" 
+        bindinput="onPasswordInput"
+      />
+      <view class="eye-icon" bindtap="togglePassword">
+        <text>{{showPassword ? '🙈' : '👁'}}</text>
+      </view>
+    </view>
+
+    <button 
+      class="login-btn" 
+      bindtap="handleLogin" 
+      loading="{{loading}}"
+      disabled="{{loading}}"
+    >
+      {{loading ? '登录中...' : '登 录'}}
+    </button>
+  </view>
+
+  <view class="login-footer">
+    <text class="version">Version 7.0.1</text>
+  </view>
+</view>
+

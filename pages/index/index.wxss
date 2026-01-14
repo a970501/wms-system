@@ -1,0 +1,295 @@
+/* pages/index/index.wxss */
+.container {
+  padding: 30rpx;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+/* 网络状态提示 */
+.network-status {
+  margin-bottom: 20rpx;
+}
+
+.offline-indicator,
+.sync-indicator {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  border-radius: 12rpx;
+  margin-bottom: 10rpx;
+}
+
+.offline-indicator {
+  background-color: #fff3cd;
+  border: 1rpx solid #ffeaa7;
+}
+
+.sync-indicator {
+  background-color: #d1ecf1;
+  border: 1rpx solid #bee5eb;
+}
+
+.offline-icon,
+.sync-icon {
+  font-size: 28rpx;
+  margin-right: 12rpx;
+}
+
+.offline-text,
+.sync-text {
+  font-size: 26rpx;
+  color: #856404;
+}
+
+.sync-text {
+  color: #0c5460;
+}
+
+/* 欢迎卡片 */
+.welcome-card {
+  background: linear-gradient(135deg, #409EFF 0%, #67C23A 100%);
+  border-radius: 20rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 30rpx;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8rpx 32rpx rgba(64, 158, 255, 0.3);
+}
+
+.welcome-text .greeting {
+  display: block;
+  font-size: 28rpx;
+  opacity: 0.9;
+  margin-bottom: 8rpx;
+}
+
+.welcome-text .username {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.date-info {
+  font-size: 28rpx;
+  opacity: 0.8;
+}
+
+/* 统计卡片 */
+.stats-section {
+  margin-bottom: 30rpx;
+}
+
+.stats-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #303133;
+  margin-bottom: 20rpx;
+}
+
+.stats-grid {
+  display: flex;
+  gap: 20rpx;
+}
+
+.stat-card {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx 20rpx;
+  text-align: center;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.stat-card:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 1rpx 6rpx rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+  font-size: 48rpx;
+  margin-bottom: 15rpx;
+  display: block;
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #409EFF;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #909399;
+}
+
+/* 快捷操作 */
+.quick-actions {
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #303133;
+  margin-bottom: 20rpx;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15rpx;
+}
+
+.action-item {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx 20rpx;
+  text-align: center;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.action-item:active {
+  transform: scale(0.95);
+  box-shadow: 0 1rpx 6rpx rgba(0, 0, 0, 0.1);
+}
+
+.action-icon {
+  font-size: 40rpx;
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.action-text {
+  font-size: 28rpx;
+  color: #303133;
+}
+
+/* 最近记录 */
+.recent-section {
+  margin-bottom: 30rpx;
+}
+
+.recent-list {
+  background-color: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.record-item {
+  position: relative;
+  padding: 24rpx 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.record-item:last-child {
+  border-bottom: none;
+}
+
+.record-item:active {
+  background-color: #f8f9fa;
+}
+
+.record-item.has-defect {
+  background-color: #fef0f0;
+  border-left: 4rpx solid #f56c6c;
+}
+
+.record-main {
+  flex: 1;
+}
+
+.product-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.record-product {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #303133;
+  margin-right: 12rpx;
+}
+
+.semi-tag {
+  font-size: 20rpx;
+  padding: 2rpx 8rpx;
+  border-radius: 8rpx;
+  background-color: #e1f3d8;
+  color: #67c23a;
+}
+
+.record-tags {
+  display: flex;
+  gap: 8rpx;
+}
+
+.tag {
+  font-size: 22rpx;
+  padding: 4rpx 8rpx;
+  border-radius: 8rpx;
+}
+
+.spec-tag {
+  background-color: #ecf5ff;
+  color: #409eff;
+}
+
+.material-tag {
+  background-color: #f4f4f5;
+  color: #909399;
+}
+
+.record-info {
+  text-align: right;
+}
+
+.record-quantity {
+  font-size: 28rpx;
+  color: #303133;
+  margin-bottom: 4rpx;
+  display: block;
+}
+
+.record-amount {
+  font-size: 26rpx;
+  color: #67c23a;
+  font-weight: bold;
+}
+
+.defect-badge {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  background-color: #f56c6c;
+  color: white;
+  font-size: 20rpx;
+  padding: 4rpx 8rpx;
+  border-radius: 8rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60rpx 0;
+  color: #909399;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  margin-top: 20rpx;
+}

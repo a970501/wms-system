@@ -1,0 +1,89 @@
+<!-- components/offline-status/offline-status.wxml -->
+<view class="offline-status {{customClass}} position-{{position}}" wx:if="{{!isOnline || offlineQueueSize > 0 || isSyncing}}">
+  
+  <!-- 离线状态栏 -->
+  <view class="status-bar" wx:if="{{!isOnline}}">
+    <view class="status-icon offline-icon">📵</view>
+    <view class="status-text">
+      <text class="status-title">离线模式</text>
+      <text class="status-desc" wx:if="{{offlineQueueSize > 0}}">{{offlineQueueSize}}条数据待同步</text>
+    </view>
+    <view class="status-actions" wx:if="{{offlineQueueSize > 0}}">
+      <button class="action-btn" size="mini" bindtap="toggleSyncDetails">详情</button>
+    </view>
+  </view>
+
+  <!-- 同步状态栏 -->
+  <view class="status-bar syncing" wx:if="{{isSyncing}}">
+    <view class="status-icon sync-icon">🔄</view>
+    <view class="status-text">
+      <text class="status-title">正在同步...</text>
+      <text class="status-desc">{{syncProgress}}%</text>
+    </view>
+    <view class="sync-progress">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{syncProgress}}%;"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 待同步状态栏 -->
+  <view class="status-bar pending" wx:if="{{isOnline && offlineQueueSize > 0 && !isSyncing}}">
+    <view class="status-icon pending-icon">⏳</view>
+    <view class="status-text">
+      <text class="status-title">有{{offlineQueueSize}}条数据待同步</text>
+      <text class="status-desc" wx:if="{{lastSyncTime}}">上次同步: {{lastSyncTime}}</text>
+    </view>
+    <view class="status-actions">
+      <button class="action-btn primary" size="mini" bindtap="onManualSync">立即同步</button>
+      <button class="action-btn" size="mini" bindtap="toggleSyncDetails">详情</button>
+    </view>
+  </view>
+
+  <!-- 详细信息面板 -->
+  <view class="sync-details" wx:if="{{showSyncDetails && showDetails}}">
+    <view class="details-header">
+      <text class="details-title">离线数据详情</text>
+      <button class="close-btn" size="mini" bindtap="toggleSyncDetails">×</button>
+    </view>
+    
+    <view class="details-content">
+      <view class="detail-item">
+        <text class="detail-label">网络状态:</text>
+        <text class="detail-value {{isOnline ? 'online' : 'offline'}}">
+          {{isOnline ? '已连接' : '已断开'}} ({{getNetworkTypeText(networkType)}})
+        </text>
+      </view>
+      
+      <view class="detail-item">
+        <text class="detail-label">待同步数据:</text>
+        <text class="detail-value">{{offlineQueueSize}}条</text>
+      </view>
+      
+      <view class="detail-item" wx:if="{{lastSyncTime}}">
+        <text class="detail-label">上次同步:</text>
+        <text class="detail-value">{{lastSyncTime}}</text>
+      </view>
+    </view>
+    
+    <view class="details-actions">
+      <button 
+        class="detail-action-btn {{!isOnline || isSyncing ? 'disabled' : ''}}" 
+        size="small" 
+        bindtap="onManualSync"
+        disabled="{{!isOnline || isSyncing}}"
+      >
+        {{isSyncing ? '同步中...' : '立即同步'}}
+      </button>
+      
+      <button 
+        class="detail-action-btn danger {{offlineQueueSize === 0 ? 'disabled' : ''}}" 
+        size="small" 
+        bindtap="onClearQueue"
+        disabled="{{offlineQueueSize === 0}}"
+      >
+        清空队列
+      </button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,89 @@
+<!-- pages/storage-logs/detail.wxml -->
+<view class="container">
+  <view class="detail-card" wx:if="{{log}}">
+    <!-- 日期头部 -->
+    <view class="header">
+      <text class="date">{{log.log_date}}</text>
+      <view class="status" wx:if="{{log.failed_count > 0}}">
+        <text class="status-text">{{log.failed_count}}条异常</text>
+      </view>
+      <view class="status success" wx:else>
+        <text class="status-text">全部成功</text>
+      </view>
+    </view>
+
+    <!-- 统计数据 -->
+    <view class="section">
+      <view class="section-title">📊 统计概览</view>
+      <view class="info-grid">
+        <view class="info-item">
+          <text class="info-label">半成品计件</text>
+          <text class="info-value">{{log.semi_finished_count}}条</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">计件总数</text>
+          <text class="info-value">{{log.semi_finished_quantity}}个</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">入库记录</text>
+          <text class="info-value success">{{log.storage_count}}条</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">入库总数</text>
+          <text class="info-value success">{{log.storage_quantity}}个</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">工人数</text>
+          <text class="info-value">{{log.worker_count}}人</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">产品种类</text>
+          <text class="info-value">{{log.product_types}}种</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 未入库记录 -->
+    <view class="section" wx:if="{{failedRecords && failedRecords.length > 0}}">
+      <view class="section-title warning">⚠️ 未入库记录</view>
+      <view class="failed-list">
+        <view class="failed-item" wx:for="{{failedRecords}}" wx:key="id">
+          <view class="failed-header">
+            <text class="failed-product">{{item.product_name}}</text>
+            <text class="failed-spec">{{item.specification}}</text>
+          </view>
+          <view class="failed-info">
+            <text class="info-text">数量: {{item.quantity}}个</text>
+            <text class="info-text">工人: {{item.worker_name}}</text>
+          </view>
+          <view class="failed-reason" wx:if="{{item.reason}}">
+            <text class="reason-text">原因: {{item.reason}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 入库明细 -->
+    <view class="section" wx:if="{{storageDetails && storageDetails.length > 0}}">
+      <view class="section-title">✅ 入库明细</view>
+      <view class="detail-list">
+        <view class="detail-item" wx:for="{{storageDetails}}" wx:key="index">
+          <view class="detail-row">
+            <text class="detail-product">{{item.product}}</text>
+            <text class="detail-type">{{item.type === 'parts' ? '零件入库' : item.type === 'blank' ? '毛坯消耗' : '成品入库'}}</text>
+          </view>
+          <view class="detail-row">
+            <text class="detail-label">次数: {{item.count}}</text>
+            <text class="detail-qty" wx:if="{{item.qty >= 0}}">+{{item.qty}}个</text>
+            <text class="detail-qty negative" wx:else>{{item.qty}}个</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

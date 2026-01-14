@@ -1,0 +1,152 @@
+/* app.wxss - 全局样式 */
+page {
+  background-color: #f5f7fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.container {
+  padding: 30rpx;
+}
+
+/* 按钮样式 */
+.btn-primary {
+  background-color: #409EFF;
+  color: #fff;
+  border: none;
+  border-radius: 8rpx;
+  padding: 24rpx 40rpx;
+  font-size: 32rpx;
+}
+
+.btn-primary:active {
+  background-color: #337ecc;
+}
+
+.btn-success {
+  background-color: #67C23A;
+  color: #fff;
+  border: none;
+  border-radius: 8rpx;
+  padding: 24rpx 40rpx;
+  font-size: 32rpx;
+}
+
+.btn-warning {
+  background-color: #E6A23C;
+  color: #fff;
+  border: none;
+  border-radius: 8rpx;
+  padding: 24rpx 40rpx;
+  font-size: 32rpx;
+}
+
+.btn-danger {
+  background-color: #F56C6C;
+  color: #fff;
+  border: none;
+  border-radius: 8rpx;
+  padding: 24rpx 40rpx;
+  font-size: 32rpx;
+}
+
+/* 卡片样式 */
+.card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #303133;
+  margin-bottom: 20rpx;
+}
+
+/* 输入框样式 */
+.input-group {
+  margin-bottom: 30rpx;
+}
+
+.input-label {
+  font-size: 28rpx;
+  color: #606266;
+  margin-bottom: 10rpx;
+}
+
+.input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 24rpx;
+  border: 2rpx solid #DCDFE6;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #409EFF;
+}
+
+/* 列表样式 */
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #EBEEF5;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+  color: #909399;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  margin-top: 20rpx;
+}
+
+/* 加载状态 */
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 40rpx 0;
+}
+
+/* 文本颜色 */
+.text-primary { color: #409EFF; }
+.text-success { color: #67C23A; }
+.text-warning { color: #E6A23C; }
+.text-danger { color: #F56C6C; }
+.text-info { color: #909399; }
+
+/* 布局辅助 */
+.flex { display: flex; }
+.flex-center { align-items: center; justify-content: center; }
+.flex-between { justify-content: space-between; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-1 { flex: 1; }
+
+/* 间距 */
+.mt-10 { margin-top: 10rpx; }
+.mt-20 { margin-top: 20rpx; }
+.mt-30 { margin-top: 30rpx; }
+.mb-10 { margin-bottom: 10rpx; }
+.mb-20 { margin-bottom: 20rpx; }
+.mb-30 { margin-bottom: 30rpx; }
+

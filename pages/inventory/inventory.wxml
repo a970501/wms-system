@@ -1,0 +1,84 @@
+<!-- pages/inventory/inventory.wxml -->
+<view class="container">
+  <!-- 搜索框 -->
+  <view class="search-section">
+    <input
+      class="search-input"
+      placeholder="搜索产品名称"
+      value="{{keyword}}"
+      bindinput="onKeywordInput"
+      bindconfirm="searchInventory"
+    />
+    <view class="search-btn" bindtap="searchInventory">搜索</view>
+  </view>
+
+  <!-- 分类切换 -->
+  <view class="category-tabs">
+    <view
+      class="tab-item {{currentTab === 'parts' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="parts"
+    >零件库存</view>
+    <view
+      class="tab-item {{currentTab === 'blank' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="blank"
+    >毛坯库存</view>
+    <view
+      class="tab-item {{currentTab === 'finished' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="finished"
+    >成品库存</view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-bar">
+    <view class="action-btn add-btn" bindtap="addInventory" wx:if="{{currentTab !== 'finished'}}">
+      <text class="action-icon">+</text>
+      <text>添加{{currentTab === 'parts' ? '零件' : '毛坯'}}</text>
+    </view>
+    <view class="action-btn assembly-btn" bindtap="goAssembly">
+      <text class="action-icon">🔧</text>
+      <text>产品组装</text>
+    </view>
+  </view>
+
+  <!-- 库存列表 -->
+  <scroll-view
+    scroll-y
+    class="inventory-list"
+    bindscrolltolower="loadMore"
+    wx:if="{{inventoryList.length > 0}}"
+  >
+    <view class="inventory-item {{item.quantity < 0 ? 'warning' : (item.quantity === 0 ? 'empty' : '')}}"
+          wx:for="{{inventoryList}}" wx:key="id"
+          bindtap="viewDetail" data-item="{{item}}">
+      <!-- 低库存/无库存标识 -->
+      <view class="stock-badge low" wx:if="{{item.quantity > 0 && item.quantity <= 10}}">库存不足</view>
+      <view class="stock-badge empty" wx:if="{{item.quantity === 0}}">无库存</view>
+      <view class="stock-badge negative" wx:if="{{item.quantity < 0}}">库存异常</view>
+
+      <view class="item-main">
+        <text class="product-name">{{item.productName}}</text>
+        <view class="item-specs">
+          <text class="tag spec-tag" wx:if="{{item.specification}}">{{item.specification}}</text>
+          <text class="tag material-tag" wx:if="{{item.material}}">{{item.material}}</text>
+          <text class="tag connection-tag" wx:if="{{item.connectionType}}">{{item.connectionType}}</text>
+        </view>
+      </view>
+      <view class="item-right">
+        <view class="item-quantity {{item.quantity < 0 ? 'negative' : ''}}">
+          <text class="quantity-value">{{item.quantity}}</text>
+          <text class="quantity-unit">{{item.unit || '个'}}</text>
+        </view>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">📦</text>
+    <text class="empty-text">暂无库存数据</text>
+  </view>
+</view>
+

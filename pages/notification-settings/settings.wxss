@@ -1,0 +1,855 @@
+/* pages/notification-settings/settings.wxss */
+.container {
+  padding: 20rpx;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  padding: 30rpx 20rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+  display: block;
+}
+
+.subtitle {
+  font-size: 24rpx;
+  color: rgba(255,255,255,0.8);
+  margin-top: 8rpx;
+  display: block;
+}
+
+.section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.status-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.status-card.enabled {
+  background: #e8f5e9;
+}
+
+.status-card.disabled {
+  background: #ffebee;
+}
+
+.status-icon {
+  font-size: 40rpx;
+  margin-right: 12rpx;
+}
+
+.status-text {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.status-card.enabled .status-text {
+  color: #2e7d32;
+}
+
+.status-card.disabled .status-text {
+  color: #c62828;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.info-value {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.config-status {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding: 12rpx 16rpx;
+  background: #f9f9f9;
+  border-radius: 8rpx;
+}
+
+.config-icon {
+  font-size: 32rpx;
+  margin-right: 8rpx;
+}
+
+.config-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.form-item {
+  margin-bottom: 20rpx;
+}
+
+.form-label {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: #667eea;
+}
+
+.form-textarea {
+  width: 100%;
+  height: 120rpx;
+  padding: 16rpx 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  box-sizing: border-box;
+}
+
+.tip {
+  margin-top: 12rpx;
+  padding: 16rpx;
+  background: #fff8e1;
+  border-radius: 8rpx;
+}
+
+.tip-text {
+  font-size: 24rpx;
+  color: #f57c00;
+}
+
+.actions {
+  padding: 20rpx 0;
+}
+
+.btn-save {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 44rpx;
+  margin-bottom: 20rpx;
+}
+
+.btn-test {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #fff;
+  color: #667eea;
+  font-size: 32rpx;
+  font-weight: 600;
+  border: 2rpx solid #667eea;
+  border-radius: 44rpx;
+  margin-bottom: 20rpx;
+}
+
+.btn-piecework {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 44rpx;
+}
+
+.btn-test-small {
+  width: 100%;
+  height: 72rpx;
+  line-height: 72rpx;
+  background: #fff;
+  color: #667eea;
+  font-size: 28rpx;
+  font-weight: 500;
+  border: 2rpx solid #667eea;
+  border-radius: 36rpx;
+  margin-top: 16rpx;
+}
+
+.help-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 40rpx;
+}
+
+.help-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.help-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12rpx;
+}
+
+.help-num {
+  width: 36rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  text-align: center;
+  background: #667eea;
+  color: #fff;
+  font-size: 22rpx;
+  border-radius: 50%;
+  margin-right: 12rpx;
+  flex-shrink: 0;
+}
+
+.help-text {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 标签页样式 */
+.tab-nav {
+  display: flex;
+  background: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  padding: 8rpx;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  border-radius: 12rpx;
+  transition: all 0.3s ease;
+}
+
+.tab-item.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.tab-text {
+  font-size: 28rpx;
+  color: #666;
+  font-weight: 500;
+}
+
+.tab-item.active .tab-text {
+  color: #fff;
+  font-weight: 600;
+}
+
+.tab-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 微信通知相关样式 */
+.recipients-section {
+  margin-top: 30rpx;
+}
+
+.recipients-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.recipients-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.btn-add-recipient {
+  padding: 12rpx 24rpx;
+  background: #667eea;
+  color: #fff;
+  font-size: 24rpx;
+  border-radius: 20rpx;
+  border: none;
+}
+
+.recipients-list {
+  border: 1rpx solid #eee;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.recipient-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 20rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+  background: #fff;
+}
+
+.recipient-item:last-child {
+  border-bottom: none;
+}
+
+.recipient-info {
+  flex: 1;
+}
+
+.recipient-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.recipient-role {
+  font-size: 24rpx;
+  color: #666;
+  padding: 4rpx 12rpx;
+  background: #f0f0f0;
+  border-radius: 12rpx;
+  display: inline-block;
+}
+
+.recipient-actions {
+  margin-left: 20rpx;
+}
+
+.btn-remove {
+  padding: 8rpx 16rpx;
+  background: #ff5252;
+  color: #fff;
+  font-size: 22rpx;
+  border-radius: 16rpx;
+  border: none;
+}
+
+.empty-recipients {
+  text-align: center;
+  padding: 60rpx 20rpx;
+  color: #999;
+}
+
+.empty-text {
+  font-size: 26rpx;
+}
+
+.tip-section {
+  margin-top: 30rpx;
+  padding: 20rpx;
+  background: #f8f9ff;
+  border-radius: 12rpx;
+}
+
+.tip-section .tip {
+  margin-bottom: 8rpx;
+  padding: 0;
+  background: none;
+}
+
+.tip-section .tip-text {
+  font-size: 24rpx;
+  color: #667eea;
+  line-height: 1.5;
+}
+
+/* 对话框样式 */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.dialog {
+  width: 600rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  margin: 0 40rpx;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 30rpx 20rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.dialog-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.dialog-close {
+  font-size: 40rpx;
+  color: #999;
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+}
+
+.dialog-content {
+  padding: 30rpx;
+}
+
+.dialog-content .form-item {
+  margin-bottom: 24rpx;
+}
+
+.dialog-content .label {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.dialog-content .input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.dialog-content .input:focus {
+  border-color: #667eea;
+  outline: none;
+}
+
+.dialog-content .picker {
+  height: 80rpx;
+  line-height: 80rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+  background: #fff;
+}
+
+.dialog-actions {
+  display: flex;
+  padding: 20rpx 30rpx 30rpx;
+  gap: 20rpx;
+}
+
+.dialog-btn {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.cancel-btn {
+  background: #f5f5f5;
+  color: #666;
+  border: none;
+}
+
+.confirm-btn {
+  background: #667eea;
+  color: #fff;
+  border: none;
+}
+
+.save-section {
+  padding: 20rpx 0 40rpx;
+}
+/* 子部分样式 */
+.subsection {
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.subsection:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.subsection-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 16rpx;
+  padding-left: 12rpx;
+  border-left: 4rpx solid #667eea;
+}
+
+/* 邮件接收者样式 */
+.recipient-email {
+  font-size: 22rpx;
+  color: #888;
+  margin-top: 4rpx;
+  display: block;
+}
+
+/* 空状态样式优化 */
+.empty-recipients {
+  text-align: center;
+  padding: 40rpx 20rpx;
+  background: #fafafa;
+  border-radius: 12rpx;
+  border: 2rpx dashed #ddd;
+}
+
+.empty-text {
+  color: #999;
+  font-size: 24rpx;
+}
+
+/* 接收者列表项优化 */
+.recipient-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  margin-bottom: 12rpx;
+  border-left: 4rpx solid #667eea;
+}
+
+.recipient-item:last-child {
+  margin-bottom: 0;
+}
+
+.recipient-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.recipient-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+
+.recipient-role {
+  font-size: 22rpx;
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 2rpx 8rpx;
+  border-radius: 8rpx;
+  display: inline-block;
+  margin-top: 4rpx;
+  width: fit-content;
+}
+
+.recipient-actions {
+  display: flex;
+  align-items: center;
+}
+
+.btn-remove {
+  background: #ff4757;
+  color: #fff;
+  border: none;
+  padding: 12rpx 20rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  min-width: auto;
+}
+
+.btn-remove:active {
+  background: #ff3838;
+}
+
+/* 添加按钮样式优化 */
+.btn-add-recipient {
+  background: #667eea;
+  color: #fff;
+  border: none;
+  padding: 12rpx 24rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  min-width: auto;
+}
+
+.btn-add-recipient:active {
+  background: #5a67d8;
+}
+
+.recipients-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.recipients-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 消息类型设置样式 */
+.message-types-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
+}
+
+.message-type-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.message-type-item:active {
+  background: #e9ecef;
+  border-color: #667eea;
+}
+
+.message-type-checkbox {
+  width: 48rpx;
+  height: 48rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+
+.message-type-checkbox.checked {
+  background: #667eea;
+  border-color: #667eea;
+}
+
+.checkbox-icon {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.message-type-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-type-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+
+.message-type-desc {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.4;
+}
+
+.message-type-actions {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.btn-select-all,
+.btn-clear-all {
+  flex: 1;
+  height: 64rpx;
+  line-height: 64rpx;
+  text-align: center;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  border: none;
+}
+
+.btn-select-all {
+  background: #667eea;
+  color: #fff;
+}
+
+.btn-select-all:active {
+  background: #5a67d8;
+}
+
+.btn-clear-all {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.btn-clear-all:active {
+  background: #e9ecef;
+}
+
+/* 邮件接收者消息类型显示样式 */
+.recipient-message-types {
+  margin-top: 8rpx;
+}
+
+.message-types-label {
+  font-size: 22rpx;
+  color: #888;
+  margin-bottom: 4rpx;
+  display: block;
+}
+
+.message-types-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6rpx;
+}
+
+.message-type-tag {
+  font-size: 20rpx;
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 2rpx 6rpx;
+  border-radius: 6rpx;
+  border: 1rpx solid rgba(102, 126, 234, 0.2);
+}
+
+/* 邮件接收者操作按钮样式 */
+.recipient-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  align-items: flex-end;
+}
+
+.btn-settings {
+  background: #667eea;
+  color: #fff;
+  border: none;
+  padding: 8rpx 16rpx;
+  border-radius: 6rpx;
+  font-size: 22rpx;
+  min-width: auto;
+}
+
+.btn-settings:active {
+  background: #5a67d8;
+}
+
+/* 对话框中的消息类型选择样式 */
+.message-types-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin-top: 12rpx;
+}
+
+.message-types-selection .message-type-item {
+  padding: 16rpx;
+  background: #f8f9fa;
+  border-radius: 8rpx;
+  border: 2rpx solid transparent;
+}
+
+.message-types-selection .message-type-item:active {
+  background: #e9ecef;
+  border-color: #667eea;
+}
+
+.message-types-selection .message-type-checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 6rpx;
+  margin-right: 12rpx;
+}
+
+.message-types-selection .message-type-checkbox.checked {
+  background: #667eea;
+  border-color: #667eea;
+}
+
+.message-types-selection .checkbox-icon {
+  font-size: 24rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.message-types-selection .message-type-name {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 2rpx;
+}
+
+.message-types-selection .message-type-desc {
+  font-size: 22rpx;
+  color: #666;
+  line-height: 1.3;
+}

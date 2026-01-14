@@ -1,0 +1,65 @@
+<!-- pages/storage-logs/logs.wxml -->
+<view class="container">
+  <!-- 统计卡片 -->
+  <view class="stats-section">
+    <view class="stat-card">
+      <text class="stat-value">{{statistics.total_semi || 0}}</text>
+      <text class="stat-label">总计件数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-value success">{{statistics.total_storage || 0}}</text>
+      <text class="stat-label">成功入库</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-value warning">{{statistics.total_failed || 0}}</text>
+      <text class="stat-label">未入库</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-value">{{statistics.success_rate || 0}}%</text>
+      <text class="stat-label">成功率</text>
+    </view>
+  </view>
+
+  <!-- 日志列表 -->
+  <view class="logs-list">
+    <view class="log-item" wx:for="{{logs}}" wx:key="id" bindtap="viewDetail" data-id="{{item.id}}">
+      <view class="log-header">
+        <text class="log-date">{{item.log_date}}</text>
+        <view class="log-badge" wx:if="{{item.failed_count > 0}}">
+          <text class="badge-text">{{item.failed_count}}条未入库</text>
+        </view>
+      </view>
+
+      <view class="log-stats">
+        <view class="log-stat">
+          <text class="stat-num">{{item.semi_finished_count}}</text>
+          <text class="stat-text">计件</text>
+        </view>
+        <text class="arrow">→</text>
+        <view class="log-stat success">
+          <text class="stat-num">{{item.storage_count}}</text>
+          <text class="stat-text">入库</text>
+        </view>
+        <view class="log-stat worker">
+          <text class="stat-num">{{item.worker_count}}</text>
+          <text class="stat-text">工人</text>
+        </view>
+      </view>
+
+      <view class="log-summary">
+        <text class="summary-text">计件{{item.semi_finished_quantity}}个 | 入库{{item.storage_quantity}}个 | {{item.product_types}}种产品</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="load-more" wx:if="{{hasMore}}">
+    <button class="load-btn" bindtap="loadMore" loading="{{loading}}">加载更多</button>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{logs.length === 0 && !loading}}">
+    <text class="empty-icon">📊</text>
+    <text class="empty-text">暂无日志数据</text>
+  </view>
+</view>

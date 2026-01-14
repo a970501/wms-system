@@ -1,0 +1,64 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/piecework/piecework",
+    "pages/piecework-add/add",
+    "pages/piecework-detail/detail",
+    "pages/piecework-search/search",
+    "pages/inventory/inventory",
+    "pages/inventory-add/add",
+    "pages/inventory-detail/detail",
+    "pages/assembly/assembly",
+    "pages/rules/rules",
+    "pages/storage-logs/logs",
+    "pages/storage-logs/detail",
+    "pages/audit-logs/logs",
+    "pages/profile/profile",
+    "pages/reconcile/reconcile",
+    "pages/notification-settings/settings",
+    "pages/developer-tools/developer-tools",
+    "pages/price-table/price-table"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#409EFF",
+    "navigationBarTitleText": "仓库管理系统",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#409EFF",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/piecework/piecework",
+        "text": "计件"
+      },
+      {
+        "pagePath": "pages/inventory/inventory",
+        "text": "库存"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于获取位置信息，提供更好的服务"
+    }
+  }
+}
+

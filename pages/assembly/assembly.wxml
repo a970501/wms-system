@@ -1,0 +1,127 @@
+<!-- pages/assembly/assembly.wxml -->
+<view class="container">
+  <!-- 组装表单 -->
+  <view class="form-section">
+    <view class="section-header">
+      <text class="section-icon">🔧</text>
+      <text class="section-title">产品装配</text>
+    </view>
+
+    <!-- 装配产品（下拉） -->
+    <view class="form-item">
+      <text class="label">装配产品</text>
+      <picker bindchange="onProductChange" value="{{productIndex}}" range="{{productNames}}">
+        <view class="picker">{{formData.productName || '请选择装配产品'}}</view>
+      </picker>
+    </view>
+
+    <!-- 规格（下拉） -->
+    <view class="form-item">
+      <text class="label">规格</text>
+      <picker bindchange="onSpecChange" value="{{specIndex}}" range="{{specOptions}}">
+        <view class="picker">{{formData.specification || '请选择规格'}}</view>
+      </picker>
+    </view>
+
+    <!-- 材料 -->
+    <view class="form-item">
+      <text class="label">材料</text>
+      <picker bindchange="onMaterialChange" value="{{materialIndex}}" range="{{materials}}">
+        <view class="picker">{{formData.material || '请选择材料'}}</view>
+      </picker>
+    </view>
+
+    <!-- 连接类型 -->
+    <view class="form-item">
+      <text class="label">连接类型</text>
+      <picker bindchange="onConnectionTypeChange" value="{{connectionTypeIndex}}" range="{{connectionTypes}}">
+        <view class="picker">{{formData.connectionType || '请选择连接类型'}}</view>
+      </picker>
+    </view>
+
+    <!-- 数量（带+/-按钮） -->
+    <view class="form-item">
+      <text class="label">数量</text>
+      <view class="qty-control">
+        <view class="qty-btn {{formData.quantity <= 1 ? 'disabled' : ''}}" bindtap="decreaseQty">−</view>
+        <input class="qty-input" type="number" value="{{formData.quantity}}" bindinput="onQuantityInput" />
+        <view class="qty-btn" bindtap="increaseQty">+</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 所需零件表格 -->
+  <view class="parts-section" wx:if="{{requiredParts.length > 0}}">
+    <view class="parts-header">
+      <text class="parts-title">所需零件：</text>
+      <text class="parts-hint">📋 表格可左右滑动</text>
+    </view>
+    <scroll-view scroll-x class="parts-table-wrapper">
+      <view class="parts-table">
+        <view class="table-row table-header">
+          <view class="table-cell cell-name">零件名称</view>
+          <view class="table-cell cell-unit">单件需要</view>
+          <view class="table-cell cell-need">装配需要</view>
+          <view class="table-cell cell-stock">库存</view>
+        </view>
+        <view class="table-row" wx:for="{{inventoryStatus.length > 0 ? inventoryStatus : requiredParts}}" wx:key="componentName">
+          <view class="table-cell cell-name">{{item.componentName}}</view>
+          <view class="table-cell cell-unit">{{item.unitQty || item.quantity || 1}}</view>
+          <view class="table-cell cell-need">{{item.needed || (item.quantity || 1) * formData.quantity}}</view>
+          <view class="table-cell cell-stock {{item.isEnough === false ? 'insufficient' : ''}}">
+            {{item.available !== undefined ? item.available : '-'}}
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 库存状态提示 -->
+    <view class="inventory-status" wx:if="{{inventoryStatus.length > 0}}">
+      <view class="status-ok" wx:if="{{canAssemble}}">
+        <text class="status-icon">✅</text>
+        <text>库存充足，可以装配</text>
+      </view>
+      <view class="status-error" wx:else>
+        <text class="status-icon">⚠️</text>
+        <text>库存不足，无法装配</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="form-section remark-section">
+    <view class="form-item">
+      <text class="label">备注</text>
+      <textarea class="textarea" placeholder="备注信息（可选）" value="{{formData.remarks}}" bindinput="onRemarksInput"></textarea>
+    </view>
+  </view>
+
+  <button class="submit-btn {{!canAssemble && insufficientParts.length > 0 ? 'btn-warning' : ''}}"
+    bindtap="submitForm" disabled="{{submitting}}">
+    {{submitting ? '提交中...' : '执行装配'}}
+  </button>
+
+  <!-- 组装记录列表 -->
+  <view class="records-section">
+    <view class="section-title">组装记录</view>
+    <scroll-view scroll-y class="records-list" wx:if="{{records.length > 0}}">
+      <view class="record-item" wx:for="{{records}}" wx:key="id">
+        <view class="record-main">
+          <text class="record-name">{{item.productName}}</text>
+          <view class="record-specs">
+            <text class="spec-tag">{{item.specification}}</text>
+            <text class="spec-tag">{{item.material}}</text>
+          </view>
+        </view>
+        <view class="record-right">
+          <text class="record-qty">×{{item.quantity}}</text>
+          <text class="record-time">{{item.createdAtStr}}</text>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="empty-state" wx:else>
+      <text>暂无组装记录</text>
+    </view>
+  </view>
+</view>
+

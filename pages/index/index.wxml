@@ -1,0 +1,87 @@
+<!-- pages/index/index.wxml -->
+<view class="container">
+  <!-- 离线状态组件 -->
+  <offline-status show-details="{{true}}" position="top" />
+
+  <!-- 欢迎区域 -->
+  <view class="welcome-card">
+    <view class="welcome-text">
+      <text class="greeting">欢迎回来</text>
+      <text class="username">{{userInfo.username || '用户'}}</text>
+    </view>
+    <view class="date-info">
+      <text>{{currentDate}}</text>
+    </view>
+  </view>
+
+  <!-- 统计卡片 -->
+  <view class="stats-section">
+    <view class="stats-title">今日概览</view>
+    <view class="stats-grid">
+      <view class="stat-card" bindtap="goToPiecework">
+        <view class="stat-icon">📋</view>
+        <view class="stat-value">{{todayPiecework}}</view>
+        <view class="stat-label">今日计件</view>
+      </view>
+      <view class="stat-card" bindtap="goToInventory">
+        <view class="stat-icon">📦</view>
+        <view class="stat-value">{{totalInventory}}</view>
+        <view class="stat-label">库存总数</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷操作 -->
+  <view class="quick-actions">
+    <view class="section-title">快捷操作</view>
+    <view class="action-grid">
+      <view class="action-item" bindtap="goToAddPiecework">
+        <view class="action-icon">➕</view>
+        <text class="action-text">添加计件</text>
+      </view>
+      <view class="action-item" bindtap="goToInventory">
+        <view class="action-icon">🔍</view>
+        <text class="action-text">查看库存</text>
+      </view>
+      <view class="action-item" bindtap="goToMyPiecework">
+        <view class="action-icon">📊</view>
+        <text class="action-text">我的计件</text>
+      </view>
+      <view class="action-item" bindtap="refreshData">
+        <view class="action-icon">🔄</view>
+        <text class="action-text">刷新数据</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近记录 -->
+  <view class="recent-section">
+    <view class="section-title">最近计件记录</view>
+    <view class="recent-list" wx:if="{{recentRecords.length > 0}}">
+      <view class="record-item {{item.defectQuantity > 0 ? 'has-defect' : ''}}" wx:for="{{recentRecords}}" wx:key="id" bindtap="goToDetail" data-record="{{item}}">
+        <view class="record-main">
+          <view class="product-row">
+            <text class="record-product">{{item.productName}}</text>
+            <text class="semi-tag" wx:if="{{item.semiFinished === '是'}}">半成品</text>
+          </view>
+          <view class="record-tags">
+            <text class="tag spec-tag" wx:if="{{item.specification}}">{{item.specification}}</text>
+            <text class="tag material-tag" wx:if="{{item.material}}">{{item.material}}</text>
+          </view>
+        </view>
+        <view class="record-info">
+          <text class="record-quantity">{{item.quantity}} {{item.unit && item.unit !== 'null' ? item.unit : '个'}}</text>
+          <text class="record-amount">¥{{item.totalAmount}}</text>
+        </view>
+        <!-- 报废角标 -->
+        <view class="defect-badge" wx:if="{{item.defectQuantity > 0}}">
+          <text>报废{{item.defectQuantity}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>
+      <text class="empty-text">暂无计件记录</text>
+    </view>
+  </view>
+</view>
+

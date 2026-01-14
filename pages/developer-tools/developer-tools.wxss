@@ -1,0 +1,724 @@
+/* pages/developer-tools/developer-tools.wxss */
+.developer-tools {
+  padding: 20rpx;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 页面标题 */
+.page-header {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  padding: 40rpx 30rpx;
+  border-radius: 20rpx;
+  margin-bottom: 30rpx;
+  color: white;
+  text-align: center;
+}
+
+.header-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10rpx;
+}
+
+.page-title {
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-right: 20rpx;
+}
+
+.admin-badge {
+  background: #e74c3c;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+}
+
+.admin-text {
+  color: white;
+  font-size: 20rpx;
+  font-weight: bold;
+}
+
+.page-subtitle {
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+/* 标签页 */
+.tab-bar {
+  display: flex;
+  background: white;
+  border-radius: 15rpx;
+  margin-bottom: 30rpx;
+  padding: 10rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 10rpx;
+  border-radius: 10rpx;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  background: #2c3e50;
+  color: white;
+}
+
+.tab-icon {
+  font-size: 32rpx;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.tab-text {
+  font-size: 24rpx;
+}
+
+/* 通用区块样式 */
+.performance-tab,
+.debug-tab,
+.system-tab,
+.logs-tab {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 25rpx;
+  display: block;
+}
+
+/* 性能监控 */
+.performance-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.metric-card {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 25rpx rgba(102, 126, 234, 0.3);
+}
+
+.metric-title {
+  font-size: 24rpx;
+  opacity: 0.9;
+  display: block;
+  margin-bottom: 15rpx;
+}
+
+.metric-value {
+  font-size: 48rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.metric-status {
+  font-size: 22rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.metric-status.good {
+  background: rgba(103, 194, 58, 0.8);
+}
+
+.metric-status.warning {
+  background: rgba(230, 162, 60, 0.8);
+}
+
+.metric-status.error {
+  background: rgba(245, 108, 108, 0.8);
+}
+
+/* 性能图表 */
+.performance-charts {
+  margin-bottom: 40rpx;
+}
+
+.chart-container {
+  background: #f8f9fa;
+  border-radius: 15rpx;
+  padding: 25rpx;
+}
+
+.chart-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+/* 性能建议 */
+.performance-recommendations {
+  margin-bottom: 40rpx;
+}
+
+.recommendation-item {
+  background: #f8f9fa;
+  border-radius: 15rpx;
+  padding: 25rpx;
+  margin-bottom: 20rpx;
+  border-left: 6rpx solid #409EFF;
+}
+
+.recommendation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.recommendation-type {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.recommendation-priority {
+  font-size: 22rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+  color: white;
+}
+
+.recommendation-priority.high {
+  background: #f56c6c;
+}
+
+.recommendation-priority.medium {
+  background: #E6A23C;
+}
+
+.recommendation-priority.low {
+  background: #67C23A;
+}
+
+.recommendation-message {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 10rpx;
+  display: block;
+}
+
+.recommendation-action {
+  font-size: 24rpx;
+  color: #409EFF;
+}
+
+/* 性能操作 */
+.performance-actions {
+  display: flex;
+  gap: 15rpx;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  background: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 15rpx;
+  padding: 20rpx 30rpx;
+  font-size: 26rpx;
+  flex: 1;
+  min-width: 200rpx;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* 调试控制台 */
+.debug-console {
+  margin-bottom: 40rpx;
+}
+
+.console-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.console-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.console-controls {
+  display: flex;
+  gap: 10rpx;
+}
+
+.control-btn {
+  background: #409EFF;
+  color: white;
+  border: none;
+  border-radius: 10rpx;
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+}
+
+.console-content {
+  background: #1e1e1e;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  height: 400rpx;
+  font-family: 'Courier New', monospace;
+}
+
+.console-log {
+  margin-bottom: 15rpx;
+  font-size: 24rpx;
+  line-height: 1.4;
+}
+
+.console-log.error {
+  color: #ff6b6b;
+}
+
+.console-log.warn {
+  color: #feca57;
+}
+
+.console-log.info {
+  color: #48dbfb;
+}
+
+.console-log.debug {
+  color: #ff9ff3;
+}
+
+.log-time {
+  color: #888;
+  margin-right: 10rpx;
+}
+
+.log-level {
+  font-weight: bold;
+  margin-right: 10rpx;
+}
+
+.log-message {
+  color: #fff;
+}
+
+.log-data {
+  margin-top: 8rpx;
+  padding-left: 20rpx;
+  color: #ddd;
+  font-size: 22rpx;
+}
+
+/* 网络监控 */
+.network-monitor {
+  margin-bottom: 40rpx;
+}
+
+.request-item {
+  background: #f8f9fa;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 15rpx;
+  border-left: 4rpx solid #409EFF;
+}
+
+.request-header {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+  margin-bottom: 10rpx;
+}
+
+.request-method {
+  font-size: 22rpx;
+  font-weight: bold;
+  padding: 4rpx 8rpx;
+  border-radius: 6rpx;
+  color: white;
+}
+
+.request-method.GET {
+  background: #67C23A;
+}
+
+.request-method.POST {
+  background: #409EFF;
+}
+
+.request-method.PUT {
+  background: #E6A23C;
+}
+
+.request-method.DELETE {
+  background: #f56c6c;
+}
+
+.request-url {
+  flex: 1;
+  font-size: 24rpx;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.request-status {
+  font-size: 22rpx;
+  font-weight: bold;
+}
+
+.request-status.success {
+  color: #67C23A;
+}
+
+.request-status.error {
+  color: #f56c6c;
+}
+
+.request-details {
+  display: flex;
+  gap: 20rpx;
+  font-size: 22rpx;
+  color: #666;
+}
+
+/* 调试工具网格 */
+.debug-tools {
+  margin-bottom: 40rpx;
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+}
+
+.tool-item {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 30rpx;
+  border-radius: 15rpx;
+  text-align: center;
+  box-shadow: 0 6rpx 20rpx rgba(102, 126, 234, 0.3);
+}
+
+.tool-icon {
+  font-size: 48rpx;
+  display: block;
+  margin-bottom: 15rpx;
+}
+
+.tool-name {
+  font-size: 26rpx;
+  font-weight: bold;
+}
+
+/* 系统信息 */
+.user-info-section,
+.system-info,
+.app-info,
+.env-info {
+  margin-bottom: 40rpx;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15rpx;
+}
+
+.info-item {
+  background: #f8f9fa;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  text-align: center;
+  position: relative;
+}
+
+.info-item.copyable {
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2rpx solid transparent;
+}
+
+.info-item.copyable:hover {
+  border-color: #409EFF;
+  background: #ecf5ff;
+}
+
+.info-value-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+}
+
+.copy-icon {
+  font-size: 24rpx;
+  color: #409EFF;
+  opacity: 0.7;
+}
+
+.info-item.copyable .copy-icon {
+  opacity: 1;
+}
+
+.info-label {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.info-value {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  word-break: break-all;
+}
+
+/* 环境变量 */
+.env-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15rpx 20rpx;
+  background: #f8f9fa;
+  border-radius: 10rpx;
+  margin-bottom: 10rpx;
+}
+
+.env-key {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.env-value {
+  font-size: 24rpx;
+  color: #666;
+  font-family: 'Courier New', monospace;
+}
+
+/* 日志过滤 */
+.log-filters {
+  margin-bottom: 30rpx;
+}
+
+.filter-group {
+  margin-bottom: 20rpx;
+}
+
+.filter-label {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+  display: block;
+}
+
+.filter-options {
+  display: flex;
+  gap: 10rpx;
+  flex-wrap: wrap;
+}
+
+.filter-option {
+  background: #f0f0f0;
+  color: #666;
+  padding: 10rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  transition: all 0.3s;
+}
+
+.filter-option.active {
+  background: #409EFF;
+  color: white;
+}
+
+/* 日志容器 */
+.logs-container {
+  margin-bottom: 30rpx;
+}
+
+.logs-scroll {
+  height: 600rpx;
+  background: #1e1e1e;
+  border-radius: 10rpx;
+  padding: 20rpx;
+}
+
+.log-entry {
+  margin-bottom: 20rpx;
+  padding: 15rpx;
+  border-radius: 8rpx;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.log-entry.error {
+  border-left: 4rpx solid #ff6b6b;
+}
+
+.log-entry.warn {
+  border-left: 4rpx solid #feca57;
+}
+
+.log-entry.info {
+  border-left: 4rpx solid #48dbfb;
+}
+
+.log-entry.debug {
+  border-left: 4rpx solid #ff9ff3;
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.log-timestamp {
+  font-size: 22rpx;
+  color: #888;
+  font-family: 'Courier New', monospace;
+}
+
+.log-level-badge {
+  font-size: 20rpx;
+  font-weight: bold;
+  padding: 4rpx 8rpx;
+  border-radius: 6rpx;
+  background: #333;
+  color: white;
+}
+
+.log-content {
+  font-size: 24rpx;
+  color: #fff;
+  line-height: 1.4;
+  font-family: 'Courier New', monospace;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.log-stack {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10rpx;
+  border-radius: 6rpx;
+  font-size: 22rpx;
+  color: #ff6b6b;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 10rpx;
+}
+
+.log-context {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10rpx;
+  border-radius: 6rpx;
+}
+
+.context-title {
+  font-size: 22rpx;
+  color: #48dbfb;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5rpx;
+}
+
+.context-data {
+  font-size: 20rpx;
+  color: #ddd;
+  font-family: 'Courier New', monospace;
+}
+
+/* 日志操作 */
+.log-actions {
+  display: flex;
+  gap: 15rpx;
+}
+
+/* 加载状态 */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  color: white;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  border-top: 4rpx solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .performance-overview,
+  .info-grid,
+  .tool-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .performance-actions,
+  .log-actions {
+    flex-direction: column;
+  }
+  
+  .action-btn {
+    min-width: auto;
+  }
+  
+  .request-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8rpx;
+  }
+  
+  .request-details {
+    flex-direction: column;
+    gap: 5rpx;
+  }
+}

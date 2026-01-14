@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "开发者工具",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "chart": "/components/chart/chart"
+  }
+}

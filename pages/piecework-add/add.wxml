@@ -1,0 +1,101 @@
+<!-- pages/piecework-add/add.wxml -->
+<view class="container">
+  <view class="form-section">
+    <!-- 产品选择 -->
+    <view class="form-item">
+      <text class="label">产品名称 <text class="required">*</text></text>
+      <picker mode="selector" range="{{productNames}}" bindchange="onProductChange">
+        <view class="picker {{formData.productName ? '' : 'placeholder'}}">
+          {{formData.productName || '请选择产品'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 规格选择 -->
+    <view class="form-item">
+      <text class="label">规格 <text class="required">*</text></text>
+      <picker mode="selector" range="{{specifications}}" bindchange="onSpecChange">
+        <view class="picker {{formData.specification ? '' : 'placeholder'}}">
+          {{formData.specification || '请选择规格'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 数量输入 -->
+    <view class="form-item">
+      <text class="label">数量 <text class="required">*</text></text>
+      <input type="number" placeholder="请输入数量" value="{{formData.quantity}}" bindinput="onQuantityInput" />
+    </view>
+
+    <!-- 材料选择 -->
+    <view class="form-item">
+      <text class="label">材料</text>
+      <picker mode="selector" range="{{materials}}" value="{{materialIndex}}" bindchange="onMaterialChange">
+        <view class="picker">{{formData.material || '选择材料'}}</view>
+      </picker>
+    </view>
+
+    <!-- 连接类型选择 -->
+    <view class="form-item">
+      <text class="label">连接类型</text>
+      <picker mode="selector" range="{{connectionTypeLabels}}" value="{{connectionTypeIndex}}" bindchange="onConnectionTypeChange">
+        <view class="picker">{{formData.connectionType || '无'}}</view>
+      </picker>
+    </view>
+
+    <!-- 单价显示 -->
+    <view class="form-item" wx:if="{{currentPrice}}">
+      <text class="label">单价</text>
+      <view class="price-display">¥{{currentPrice}}/{{currentUnit || '个'}}</view>
+    </view>
+
+    <!-- 半成品开关 -->
+    <view class="form-item switch-item">
+      <text class="label">半成品</text>
+      <switch checked="{{formData.semiFinished}}" bindchange="onSemiFinishedChange" color="#409EFF" />
+    </view>
+
+    <!-- 废品区域 -->
+    <view class="defective-section {{formData.isDefective ? 'active' : ''}}">
+      <view class="defective-header">
+        <text class="defective-icon">⚠️</text>
+        <text class="defective-title">报废信息</text>
+      </view>
+
+      <!-- 废品开关 -->
+      <view class="form-item switch-item">
+        <text class="label">是否废品</text>
+        <switch checked="{{formData.isDefective}}" bindchange="onDefectiveChange" color="#F56C6C" />
+      </view>
+
+      <!-- 废品详情（废品时显示） -->
+      <block wx:if="{{formData.isDefective}}">
+        <!-- 报废数量 -->
+        <view class="form-item">
+          <text class="label defective-label">报废数量 <text class="required">*</text></text>
+          <input type="number" placeholder="请输入报废数量" value="{{formData.defectiveQuantity}}" bindinput="onDefectiveQuantityInput" class="defective-input" />
+        </view>
+
+        <!-- 废品原因 -->
+        <view class="form-item">
+          <text class="label defective-label">废品原因</text>
+          <input type="text" placeholder="请输入废品原因" value="{{formData.defectiveReason}}" bindinput="onDefectiveReasonInput" class="defective-input" />
+        </view>
+      </block>
+    </view>
+
+    <!-- 备注 -->
+    <view class="form-item">
+      <text class="label">备注</text>
+      <textarea placeholder="请输入备注（可选）" value="{{formData.remarks}}" bindinput="onRemarksInput" maxlength="200" />
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="btn-section">
+    <button class="submit-btn" bindtap="submitForm" disabled="{{submitting}}">
+      {{submitting ? '提交中...' : '提交'}}
+    </button>
+  </view>
+</view>
+

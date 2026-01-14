@@ -1,0 +1,400 @@
+/* pages/piecework/piecework.wxss */
+.container {
+  padding: 20rpx;
+  padding-bottom: 180rpx;
+}
+
+/* 搜索框 */
+.search-section {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 16rpx 20rpx;
+  margin-bottom: 16rpx;
+  position: relative;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  padding: 8rpx 0;
+}
+
+.clear-btn {
+  width: 40rpx;
+  height: 40rpx;
+  background: #c0c4cc;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+}
+
+/* 日期筛选 */
+.filter-section {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 16rpx 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.date-picker {
+  flex: 1;
+  background: #f5f7fa;
+  padding: 14rpx 16rpx;
+  border-radius: 8rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #606266;
+}
+
+.date-separator {
+  padding: 0 12rpx;
+  color: #909399;
+  font-size: 24rpx;
+}
+
+.filter-btn {
+  background: #409EFF;
+  color: #fff;
+  padding: 14rpx 24rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  margin-left: 12rpx;
+}
+
+/* 统计卡片 */
+.summary-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.summary-left {
+  display: flex;
+  flex: 1;
+}
+
+.summary-item {
+  flex: 1;
+  text-align: center;
+}
+
+.summary-label {
+  font-size: 24rpx;
+  color: #909399;
+  display: block;
+}
+
+.summary-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #303133;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.summary-divider {
+  width: 2rpx;
+  background: #EBEEF5;
+  margin: 0 24rpx;
+  height: 60rpx;
+}
+
+/* 导出按钮 */
+.export-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #67C23A, #85ce61);
+  color: #fff;
+  padding: 16rpx 24rpx;
+  border-radius: 12rpx;
+  font-size: 24rpx;
+  min-width: 100rpx;
+}
+
+.export-icon {
+  font-size: 32rpx;
+  margin-bottom: 4rpx;
+}
+
+.records-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #303133;
+}
+
+.record-count {
+  font-size: 26rpx;
+  color: #909399;
+}
+
+.records-list {
+  max-height: 800rpx;
+}
+
+.record-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+
+/* 报废角标 - 右上角 */
+.defect-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #F56C6C, #f78989);
+  color: #fff;
+  font-size: 22rpx;
+  padding: 8rpx 20rpx;
+  border-bottom-left-radius: 16rpx;
+  font-weight: bold;
+}
+
+/* 记录头部 */
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+}
+
+.product-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex: 1;
+}
+
+.product-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #303133;
+}
+
+.semi-tag {
+  background: linear-gradient(135deg, #faad14, #ffc53d);
+  color: #fff;
+  font-size: 20rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 20rpx;
+}
+
+.work-date {
+  font-size: 24rpx;
+  color: #909399;
+}
+
+/* 规格标签 */
+.record-specs {
+  display: flex;
+  gap: 8rpx;
+  margin-bottom: 20rpx;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+  font-size: 22rpx;
+}
+
+.spec-tag {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.material-tag {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+/* 底部：数量和金额 */
+.record-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.footer-left {
+  display: flex;
+  align-items: baseline;
+  gap: 8rpx;
+}
+
+.quantity-label {
+  font-size: 24rpx;
+  color: #909399;
+}
+
+.quantity-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #409EFF;
+}
+
+.quantity-unit {
+  font-size: 24rpx;
+  color: #909399;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+.price-text {
+  font-size: 24rpx;
+  color: #909399;
+  display: block;
+}
+
+.amount-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #67C23A;
+}
+
+.record-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.record-detail {
+  font-size: 26rpx;
+  color: #606266;
+}
+
+.detail-label {
+  color: #909399;
+}
+
+.record-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #EBEEF5;
+}
+
+.unit-price {
+  font-size: 26rpx;
+  color: #909399;
+}
+
+.total-amount {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #67C23A;
+}
+
+.empty-state {
+  padding: 80rpx 0;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #909399;
+}
+
+.add-btn {
+  position: fixed;
+  right: 40rpx;
+  bottom: 200rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: #409EFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 20rpx rgba(64, 158, 255, 0.4);
+}
+
+.add-btn text {
+  font-size: 56rpx;
+  color: #fff;
+}
+
+.text-primary { color: #409EFF; }
+.text-success { color: #67C23A; }
+.text-muted { color: #C0C4CC; text-decoration: line-through; }
+
+/* 报废标签 */
+.defect-tag {
+  background: #F56C6C;
+  color: #fff;
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 16rpx;
+}
+
+/* 有报废的记录卡片 */
+.record-card.has-defect {
+  background: #fff5f5;
+  border: 2rpx solid #fcc;
+}
+
+/* 报废信息行 */
+.defect-info {
+  width: 100%;
+  background: #fff0f0;
+  padding: 12rpx 16rpx;
+  border-radius: 8rpx;
+  margin-top: 8rpx;
+}
+
+.defect-label {
+  color: #F56C6C !important;
+}
+
+.defect-qty {
+  color: #F56C6C;
+  font-weight: bold;
+}
+
+.defect-reason {
+  color: #909399;
+  font-size: 24rpx;
+  margin-left: 8rpx;
+}
+

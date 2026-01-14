@@ -1,0 +1,119 @@
+<!-- pages/rules/rules.wxml -->
+<view class="container">
+  <!-- 标签页 -->
+  <view class="tabs">
+    <view class="tab {{ruleType === 'storage' ? 'active' : ''}}" bindtap="switchTab" data-type="storage">入库规则</view>
+    <view class="tab {{ruleType === 'assembly' ? 'active' : ''}}" bindtap="switchTab" data-type="assembly">装配规则</view>
+  </view>
+
+  <!-- 规则列表 -->
+  <scroll-view scroll-y class="rules-list">
+    <view class="rule-item" wx:for="{{rules}}" wx:key="id" bindtap="editRule" data-rule="{{item}}">
+      <view class="rule-header">
+        <text class="rule-name">{{item.ruleName || item.productName}}</text>
+        <switch class="rule-switch" checked="{{item.isEnabled}}" catchtap="toggleRule" data-id="{{item.id}}" />
+      </view>
+      <view class="rule-info" wx:if="{{ruleType === 'storage'}}">
+        <text class="info-tag">匹配: {{item.productPattern}}</text>
+        <text class="info-tag">目标: {{item.targetLocation}}</text>
+        <text class="info-tag" wx:if="{{item.storageRatio}}">比例: {{item.storageRatio}}</text>
+        <text class="info-tag" wx:if="{{item.blankProductName}}">毛坯: {{item.blankProductName}} ×{{item.blankQuantityPerUnit}}</text>
+      </view>
+      <view class="rule-info" wx:if="{{ruleType === 'assembly'}}">
+        <text class="info-tag">产品: {{item.productName}}</text>
+        <text class="info-tag" wx:if="{{item.items}}">零件: {{item.items.length}}个</text>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{rules.length === 0}}">
+      <text>暂无{{ruleType === 'storage' ? '入库' : '装配'}}规则</text>
+    </view>
+  </scroll-view>
+
+  <!-- 底部按钮组 -->
+  <view class="bottom-btns">
+    <view class="reapply-btn" wx:if="{{ruleType === 'storage'}}" bindtap="reapplyRules">
+      <text class="icon">🔄</text>
+      <text>重新应用规则</text>
+    </view>
+    <view class="add-btn" bindtap="addRule">+ 添加规则</view>
+  </view>
+
+  <!-- 编辑弹窗 - 入库规则 -->
+  <view class="modal-mask" wx:if="{{showModal}}" bindtap="closeModal">
+    <view class="modal-content" catchtap="preventClose">
+      <view class="modal-header">
+        <text class="modal-title">{{isEdit ? '编辑' : '添加'}}{{ruleType === 'storage' ? '入库' : '装配'}}规则</text>
+        <text class="modal-close" bindtap="closeModal">×</text>
+      </view>
+      
+      <!-- 入库规则表单 -->
+      <scroll-view scroll-y class="modal-body" wx:if="{{ruleType === 'storage'}}">
+        <view class="form-item">
+          <text class="label">规则名称</text>
+          <input class="input" placeholder="如：截止阀入库" value="{{formData.ruleName}}" bindinput="onInput" data-field="ruleName" />
+        </view>
+        <view class="form-item">
+          <text class="label">产品匹配模式</text>
+          <input class="input" placeholder="如：截止阀% 或 %闸阀%" value="{{formData.productPattern}}" bindinput="onInput" data-field="productPattern" />
+          <text class="hint">使用 % 作为通配符</text>
+        </view>
+        <view class="form-item">
+          <text class="label">入库目标</text>
+          <input class="input" placeholder="如：截止阀" value="{{formData.targetLocation}}" bindinput="onInput" data-field="targetLocation" />
+        </view>
+        <view class="form-item">
+          <text class="label">入库比例</text>
+          <picker class="picker" mode="selector" range="{{storageRatios}}" value="{{storageRatioIndex}}" bindchange="onRatioPicker">
+            <view class="picker-view">{{formData.storageRatio || '请选择入库比例'}}</view>
+          </picker>
+          <text class="hint">设置入库时产品与库位的数量比例</text>
+        </view>
+        <view class="form-item">
+          <text class="label">优先级</text>
+          <input class="input" type="number" placeholder="数值越大优先级越高" value="{{formData.priority}}" bindinput="onInput" data-field="priority" />
+        </view>
+        <view class="form-item">
+          <text class="label">是否消耗毛坯</text>
+          <switch checked="{{formData.isFinishedProduct}}" bindchange="onSwitchChange" data-field="isFinishedProduct" />
+        </view>
+        <view wx:if="{{formData.isFinishedProduct}}">
+          <view class="form-item">
+            <text class="label">毛坯产品名称</text>
+            <input class="input" placeholder="如：截止阀体" value="{{formData.blankProductName}}" bindinput="onInput" data-field="blankProductName" />
+          </view>
+          <view class="form-item">
+            <text class="label">每件消耗毛坯数</text>
+            <input class="input" type="number" value="{{formData.blankQuantityPerUnit}}" bindinput="onInput" data-field="blankQuantityPerUnit" />
+          </view>
+        </view>
+      </scroll-view>
+
+      <!-- 装配规则表单 -->
+      <scroll-view scroll-y class="modal-body" wx:if="{{ruleType === 'assembly'}}">
+        <view class="form-item">
+          <text class="label">产品名称</text>
+          <input class="input" placeholder="如：截止阀" value="{{formData.productName}}" bindinput="onInput" data-field="productName" />
+        </view>
+        <view class="form-item">
+          <text class="label">所需零件</text>
+          <view class="parts-list">
+            <view class="part-item" wx:for="{{formData.items}}" wx:key="index" wx:for-index="idx">
+              <input class="part-name" placeholder="零件名称" value="{{item.componentName}}" bindinput="onPartInput" data-idx="{{idx}}" data-field="componentName" />
+              <input class="part-qty" type="number" placeholder="数量" value="{{item.quantity}}" bindinput="onPartInput" data-idx="{{idx}}" data-field="quantity" />
+              <text class="part-delete" bindtap="deletePart" data-idx="{{idx}}">×</text>
+            </view>
+            <view class="add-part-btn" bindtap="addPart">+ 添加零件</view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <view class="modal-footer">
+        <button class="btn-cancel" bindtap="closeModal">取消</button>
+        <button class="btn-delete" wx:if="{{isEdit}}" bindtap="deleteRule">删除</button>
+        <button class="btn-save" bindtap="saveRule">保存</button>
+      </view>
+    </view>
+  </view>
+</view>
+

@@ -1,0 +1,96 @@
+<!-- pages/piecework-detail/detail.wxml -->
+<view class="container">
+  <view class="detail-card" wx:if="{{record}}">
+    <!-- 头部：产品名称和半成品标识 -->
+    <view class="header">
+      <view class="title-row">
+        <text class="product-name">{{record.productName}}</text>
+        <text class="semi-tag" wx:if="{{record.semiFinished === '是'}}">半成品</text>
+      </view>
+      <text class="work-date">{{record.workDate || record.createdTime}}</text>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="section">
+      <view class="section-title">基本信息</view>
+      <view class="info-row">
+        <text class="label">规格：</text>
+        <text class="value">{{record.specification || '-'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">材质：</text>
+        <text class="value">{{record.material || '-'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">连接类型：</text>
+        <text class="value">{{record.connectionType || '-'}}</text>
+      </view>
+    </view>
+
+    <!-- 计件信息 -->
+    <view class="section">
+      <view class="section-title">计件信息</view>
+      <view class="info-row">
+        <text class="label">数量：</text>
+        <text class="value highlight">{{record.quantity}} {{record.unit || '个'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">单价：</text>
+        <text class="value">¥{{record.unitPrice}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">总金额：</text>
+        <text class="value amount">¥{{record.totalAmount}}</text>
+      </view>
+    </view>
+
+    <!-- 废品信息（如果有） -->
+    <view class="section" wx:if="{{record.isDefective === true || record.isDefective === 'true' || record.defectQuantity > 0}}">
+      <view class="section-title defective-title">⚠️ 报废信息</view>
+      <view class="info-row">
+        <text class="label">报废数量：</text>
+        <text class="value defective">{{record.defectQuantity || record.quantity}} {{record.unit || '个'}}</text>
+      </view>
+      <view class="info-row" wx:if="{{record.defectiveReason}}">
+        <text class="label">报废原因：</text>
+        <text class="value">{{record.defectiveReason}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">计件金额：</text>
+        <text class="value">¥0（报废不计入）</text>
+      </view>
+      <view class="info-row">
+        <text class="label">毛坯扣除：</text>
+        <text class="value">已扣除</text>
+      </view>
+    </view>
+
+    <!-- 其他信息 -->
+    <view class="section">
+      <view class="section-title">其他信息</view>
+      <view class="info-row">
+        <text class="label">工人：</text>
+        <text class="value">{{record.workerName}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">创建时间：</text>
+        <text class="value">{{record.createdTime}}</text>
+      </view>
+      <view class="info-row" wx:if="{{record.remarks}}">
+        <text class="label">备注：</text>
+        <text class="value">{{record.remarks}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <text>加载中...</text>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons" wx:if="{{record}}">
+    <button class="delete-btn" bindtap="handleDelete">删除</button>
+    <button class="edit-btn" bindtap="goToEdit">编辑</button>
+  </view>
+</view>
+

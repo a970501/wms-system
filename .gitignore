@@ -1,0 +1,66 @@
+# 微信小程序
+project.private.config.json
+miniprogram_npm/
+
+# 后端
+wms-backend/target/
+wms-backend/*.log
+wms-backend/*.pid
+*.jar
+*.war
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# 日志
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# 环境配置
+.env
+.env.local
+*.pem
+
+# AI 编辑器配置
+.agent/
+.clinerules/
+.cloudbase/
+.codebuddy/
+.comate/
+.gemini/
+.kiro/
+.lingma/
+.qoder/
+.roo/
+.rules/
+.trae/
+.windsurf/
+.augment-guidelines
+.mcp.json
+.opencode.json
+.login_fix_applied
+
+# Node
+node_modules/
+
+# 压缩包
+*.zip
+*.tgz
+*.gz
+
+# 备份文件
+*.bak
+*.bak.
+*.backup
+*.no_deduct
+*.before_finished
+
