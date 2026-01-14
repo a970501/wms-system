@@ -51,16 +51,61 @@ page {
 
   /* 基础设置 */
   background-color: var(--bg-page);
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  /* 优化字体栈：优先使用系统字体，确保中文显示清晰 */
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display',
+               'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB',
+               'Source Han Sans CN', 'WenQuanYi Micro Hei', sans-serif;
   font-size: 28rpx;
   color: var(--text-primary);
   box-sizing: border-box;
+  /* 字体渲染优化 */
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* 防止文字竖排显示 */
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  /* 行高优化 */
+  line-height: 1.6;
+  /* 字间距微调 */
+  letter-spacing: 0.02em;
 }
 
 .container {
   padding: 32rpx;
   min-height: 100vh;
+  /* 确保文字水平显示 */
+  writing-mode: horizontal-tb;
+}
+
+/* ==================== 文本样式优化 ==================== */
+text, view {
+  /* 防止文字竖排 */
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  /* 文字换行优化 */
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+/* 标题文字 */
+.title, .section-title, .card-title {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+}
+
+/* 正文文字 */
+.body-text, .detail-text {
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+
+/* 数字显示优化 */
+.number, .price, .quantity, .stat-value {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
 }
 
 /* ==================== 按钮系统 ==================== */

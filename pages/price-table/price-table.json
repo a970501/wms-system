@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "单价表管理",
   "enablePullDownRefresh": true,
-  "backgroundColor": "#f5f5f5"
+  "backgroundColor": "#F8FAFC",
+  "backgroundColorTop": "#F8FAFC",
+  "backgroundColorBottom": "#EEF2FF"
 }

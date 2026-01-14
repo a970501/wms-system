@@ -1,8 +1,10 @@
-/* pages/price-table/price-table.wxss */
+/* pages/price-table/price-table.wxss - UI/UX Pro Max */
 .container {
-  padding: 20rpx;
-  background-color: #f5f5f5;
+  padding: 24rpx;
+  background: linear-gradient(180deg, #F8FAFC 0%, #EEF2FF 100%);
   min-height: 100vh;
+  /* 确保文字水平显示 */
+  writing-mode: horizontal-tb;
 }
 
 /* 页面头部 */
@@ -10,60 +12,73 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30rpx;
-  padding: 20rpx;
-  background: white;
-  border-radius: 12rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.1);
+  margin-bottom: 28rpx;
+  padding: 24rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
 }
 
 .title {
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #333;
+  font-size: 38rpx;
+  font-weight: 700;
+  color: #1F2937;
+  letter-spacing: 0.02em;
 }
 
 .header-actions {
   display: flex;
-  gap: 20rpx;
+  gap: 16rpx;
 }
 
 .action-btn {
-  padding: 12rpx 24rpx;
-  border-radius: 8rpx;
+  padding: 14rpx 28rpx;
+  border-radius: 14rpx;
   font-size: 28rpx;
+  font-weight: 600;
   border: none;
+  transition: all 0.25s ease;
+  line-height: 1.4;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
 }
 
 .add-btn {
-  background: #007aff;
-  color: white;
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  color: #fff;
+  box-shadow: 0 6rpx 16rpx rgba(99, 102, 241, 0.3);
 }
 
 .export-btn {
-  background: #34c759;
-  color: white;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #fff;
+  box-shadow: 0 6rpx 16rpx rgba(16, 185, 129, 0.3);
 }
 
 .edit-btn {
-  background: #ff9500;
-  color: white;
-  padding: 8rpx 16rpx;
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: #fff;
+  padding: 10rpx 20rpx;
   font-size: 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(245, 158, 11, 0.3);
 }
 
 .delete-btn {
-  background: #ff3b30;
-  color: white;
-  padding: 8rpx 16rpx;
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  color: #fff;
+  padding: 10rpx 20rpx;
   font-size: 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(239, 68, 68, 0.3);
 }
 
 /* 加载状态 */
 .loading {
   text-align: center;
-  padding: 100rpx 0;
-  color: #999;
+  padding: 120rpx 0;
+  color: #9CA3AF;
+  font-size: 28rpx;
 }
 
 /* 单价列表 */
@@ -74,17 +89,23 @@
 }
 
 .price-item {
-  background: white;
-  border-radius: 12rpx;
-  padding: 30rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.1);
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 28rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.25s ease;
+}
+
+.price-item:active {
+  transform: scale(0.98);
 }
 
 .item-content {
   flex: 1;
+  min-width: 0; /* 防止flex子项溢出 */
 }
 
 .item-header {
@@ -95,55 +116,81 @@
 }
 
 .product-name {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #1F2937;
+  letter-spacing: 0.02em;
+  /* 文字溢出处理 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60%;
 }
 
 .unit-price {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #007aff;
+  font-size: 34rpx;
+  font-weight: 700;
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* 数字等宽显示 */
+  font-variant-numeric: tabular-nums;
 }
 
 .item-details {
   display: flex;
-  flex-direction: column;
-  gap: 8rpx;
+  flex-wrap: wrap;
+  gap: 10rpx;
 }
 
 .detail-text {
   font-size: 26rpx;
-  color: #666;
+  color: #6B7280;
+  font-weight: 500;
+  line-height: 1.5;
+  /* 添加背景标签样式 */
+  background: #F3F4F6;
+  padding: 6rpx 12rpx;
+  border-radius: 8rpx;
 }
 
 .item-actions {
   display: flex;
   flex-direction: column;
-  gap: 12rpx;
-  margin-left: 20rpx;
+  gap: 14rpx;
+  margin-left: 24rpx;
+  flex-shrink: 0;
 }
 
 /* 空状态 */
 .empty-state {
   text-align: center;
-  padding: 100rpx 0;
+  padding: 120rpx 0;
 }
 
 .empty-text {
   font-size: 32rpx;
-  color: #999;
-  margin-bottom: 40rpx;
+  color: #9CA3AF;
+  margin-bottom: 48rpx;
   display: block;
+  letter-spacing: 0.02em;
 }
 
 .add-first-btn {
-  background: #007aff;
-  color: white;
-  border-radius: 8rpx;
-  padding: 20rpx 40rpx;
-  font-size: 28rpx;
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  color: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx 48rpx;
+  font-size: 30rpx;
+  font-weight: 600;
   border: none;
+  box-shadow: 0 8rpx 24rpx rgba(99, 102, 241, 0.35);
+  transition: all 0.25s ease;
+}
+
+.add-first-btn:active {
+  transform: scale(0.96);
 }
 
 /* 对话框 */
@@ -153,7 +200,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -161,93 +208,125 @@
 }
 
 .dialog {
-  background: white;
-  border-radius: 16rpx;
+  background: #fff;
+  border-radius: 24rpx;
   width: 90%;
-  max-width: 600rpx;
+  max-width: 620rpx;
   max-height: 80vh;
   overflow: hidden;
+  box-shadow: 0 24rpx 64rpx rgba(0, 0, 0, 0.2);
 }
 
 .dialog-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30rpx;
-  border-bottom: 1rpx solid #eee;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #F3F4F6;
 }
 
 .dialog-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #1F2937;
+  letter-spacing: 0.02em;
 }
 
 .dialog-close {
-  font-size: 40rpx;
-  color: #999;
-  width: 60rpx;
-  height: 60rpx;
+  font-size: 44rpx;
+  color: #9CA3AF;
+  width: 64rpx;
+  height: 64rpx;
   display: flex;
   justify-content: center;
   align-items: center;
+  line-height: 1;
 }
 
 .dialog-content {
-  padding: 30rpx;
+  padding: 32rpx;
   max-height: 60vh;
   overflow-y: auto;
 }
 
 .form-item {
-  margin-bottom: 30rpx;
+  margin-bottom: 28rpx;
 }
 
 .label {
   display: block;
   font-size: 28rpx;
-  color: #333;
-  margin-bottom: 12rpx;
+  color: #374151;
+  margin-bottom: 14rpx;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .input {
   width: 100%;
-  padding: 20rpx;
-  border: 1rpx solid #ddd;
-  border-radius: 8rpx;
+  padding: 24rpx;
+  border: 2rpx solid #E5E7EB;
+  border-radius: 16rpx;
   font-size: 28rpx;
   box-sizing: border-box;
+  background: #F9FAFB;
+  transition: all 0.25s ease;
+  color: #1F2937;
+}
+
+.input:focus {
+  background: #fff;
+  border-color: #6366F1;
+  box-shadow: 0 0 0 4rpx rgba(99, 102, 241, 0.1);
+}
+
+.input::placeholder {
+  color: #9CA3AF;
 }
 
 .picker {
   width: 100%;
-  padding: 20rpx;
-  border: 1rpx solid #ddd;
-  border-radius: 8rpx;
+  padding: 24rpx;
+  border: 2rpx solid #E5E7EB;
+  border-radius: 16rpx;
   font-size: 28rpx;
-  color: #333;
-  background: white;
+  color: #1F2937;
+  background: #F9FAFB;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.picker:active {
+  background: #EEF2FF;
+  border-color: #6366F1;
 }
 
 .dialog-actions {
   display: flex;
-  border-top: 1rpx solid #eee;
+  border-top: 1rpx solid #F3F4F6;
 }
 
 .dialog-btn {
   flex: 1;
-  padding: 30rpx;
-  font-size: 28rpx;
+  padding: 32rpx;
+  font-size: 30rpx;
+  font-weight: 600;
   border: none;
-  background: white;
-  color: #333;
+  background: #fff;
+  color: #374151;
+  transition: all 0.2s ease;
+  line-height: 1.4;
+}
+
+.dialog-btn:active {
+  background: #F9FAFB;
 }
 
 .confirm-btn {
-  color: #007aff;
-  border-left: 1rpx solid #eee;
+  color: #6366F1;
+  border-left: 1rpx solid #F3F4F6;
 }
 
 .cancel-btn {
-  color: #999;
+  color: #6B7280;
 }
