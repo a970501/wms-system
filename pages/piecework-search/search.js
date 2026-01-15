@@ -144,8 +144,8 @@ Page({
     var startDate = this.data.startDate
     var endDate = this.data.endDate
 
-    // 所有用户都可以查询所有数据
-    var url = '/piecework?startDate=' + startDate + '&endDate=' + endDate + '&queryAll=true'
+    // 高级查询页面：添加 advancedSearch=true 参数，允许所有用户查询全部数据
+    var url = '/piecework?startDate=' + startDate + '&endDate=' + endDate + '&queryAll=true&advancedSearch=true'
 
     console.log('【高级查询】请求URL:', url)
 

@@ -33,16 +33,24 @@ public class PieceWorkController {
             @RequestParam(required = false) Integer size,
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
-            @RequestParam(required = false, defaultValue = "false") Boolean queryAll) {
+            @RequestParam(required = false, defaultValue = "false") Boolean queryAll,
+            @RequestParam(required = false, defaultValue = "false") Boolean advancedSearch) {
 
         String role = (String) request.getAttribute("role");
         String username = (String) request.getAttribute("username");
 
-        if (Boolean.TRUE.equals(queryAll) && !"ADMIN".equals(role)) {
+        // 高级查询页面允许所有用户查询全部数据（用于统计和筛选）
+        // 普通查询页面仍然限制普通用户只能查看自己的数据
+        boolean allowQueryAll = Boolean.TRUE.equals(advancedSearch) || "ADMIN".equals(role);
+
+        if (Boolean.TRUE.equals(queryAll) && !allowQueryAll) {
             return Result.error(403, "无权限：仅管理员可查询全部计件记录");
         }
 
-        Object data = service.search(role, username, workerName, queryAll, startDate, endDate, page, size);
+        // 如果是高级查询，允许查询所有数据
+        Boolean effectiveQueryAll = allowQueryAll && Boolean.TRUE.equals(queryAll);
+
+        Object data = service.search(role, username, workerName, effectiveQueryAll, startDate, endDate, page, size);
         return Result.success(data);
     }
 
